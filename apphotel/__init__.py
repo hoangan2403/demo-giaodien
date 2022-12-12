@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 
 app = Flask(__name__)
+app.config['FLASK_ADMIN_SWATCH'] = 'Sketchy'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:%s@localhost/hotelappdb?charset=utf8mb4' % quote('12345678')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 

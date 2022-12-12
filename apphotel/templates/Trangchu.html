@@ -25,9 +25,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="javascript:void(0)">Loại Phòng</a>
                             <ul class="menu-none">
-                                {% for p in StyleRom %}
+                                {% for p in TypeRoom %}
                                 <li class="nav-item">
-                                 <a class="nav-link" href="/list_rom2?styleRom_id={{ p.id }}">{{ p.name }}</a>
+                                 <a class="nav-link" href="/list_room2?TypeRoom_id={{ p.id }}">{{ p.name }}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -57,13 +57,13 @@
                 <h2 class="text-white text-center">PHÒNG NỔI BẬT</h2>
                 <p class="text-white text-center">Remember to book your tickets!</p>
                 <div class="place-list">
-                    {% for c in Rom if c.StyleRom_id == 1%}
+                    {% for c in Room if c.TypeRoom_id == 1%}
                         <div class="col">
                             <div class="img-rom">
                                 <img src="{{ url_for('static', filename=c.image) }}" alt="Ảnh" class="place-img">
                             </div>
                             <div class="place-body">
-                                <h2 class="place-heading">Phòng {{ c.name }}</h2>
+                                <h2 class="place-heading">{{ c.name }}</h2>
                                 <p class="place-time">{{ "{:,.0f}".format(c.price) }} VND/đêm</p>
                                 <p class="place-content">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
                                 <button class="btn-book js-place-buy-btn">Đặt Phòng</button>

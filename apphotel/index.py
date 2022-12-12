@@ -23,7 +23,7 @@ def list_rom():
                            Room=roo,
                            TypeRoom=typeRoom)
 
-@app.route("/list_rom2")
+@app.route("/list_room2")
 def list_rom2():
     TypeRoom_id = request.args.get("TypeRoom_id")
     roo = utils.load_room(TypeRoom_id=TypeRoom_id)
@@ -47,6 +47,11 @@ def phieuthue_list():
 def categories_detail(room_id):
     roo = utils.get_room_by_id(room_id)
     return render_template('Chitietphong.html', Room=roo)
+
+
+@app.route("/signup", methods=['get', 'post'])
+def account_signup():
+    return render_template('signup.html')
 
 
 @app.route("/admin")

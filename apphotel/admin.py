@@ -17,6 +17,5 @@ class ListRoomView(ModelView):
     column_sortable_list = ['name', 'price']
 
 
-
 admin.add_view(ModelView(TypeRoom, db.session, name='Loại phòng'))
 admin.add_view(ListRoomView(Room, db.session, name='Quản lý phòng'))
