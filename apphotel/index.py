@@ -53,5 +53,8 @@ def categories_detail(room_id):
 def admin():
     return render_template('admin.html')
 
+
 if __name__ == '__main__':
+    from apphotel.admin import *
+
     app.run(debug=True)

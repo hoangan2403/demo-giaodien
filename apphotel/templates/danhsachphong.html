@@ -10,7 +10,7 @@
             <a href="{{ url_for('categories_detail', room_id = c.id) }}"><img src="{{ url_for('static', filename=c.image) }}"></a>
           </div>
           <div class="rom-text">
-            <p>Phòng {{ c.TypeRoom_id }}0{{ c.room_number }}</p>
+            <p>{{ c.name }}</p>
             <p>Giá: {{ "{:,.0f}".format(c.price) }}VND/Đêm</p>
           </div>
         </div>

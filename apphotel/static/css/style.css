@@ -66,9 +66,10 @@ body {
 }
 .roms {
     display: flex;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 .rom {
+    height: 100%;
     width: 15%;
     border-radius: 5px;
     margin:auto;
