@@ -1,0 +1,21 @@
+{% extends 'layout/base.html' %}
+{% block title %} Lễ Tân {% endblock %}
+{% block content %}
+
+<h1 class="header-text text-white text-center">Danh sách phiếu thuê</h1>
+    {% for p in TypeRoom %}
+      <h3 class="text-background text-center text-white">Tầng {{ p.id }}</h3>
+      <div class="roms">
+        {% for c in Room if c.TypeRoom_id == p.id %}
+        <div class="rom">
+          <div class="rom-img">
+            <a><img src="{{ url_for('static', filename=c.image) }}"></a>
+          </div>
+          <div class="rom-text">
+            <p>Phòng 10{{ c.room_number }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+  {% endfor %}
+{% endblock %}
