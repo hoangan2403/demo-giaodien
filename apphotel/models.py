@@ -46,8 +46,6 @@ class Account(BaseModel, UserMixin):
     avatar = Column(String(100), nullable=False)
     active = Column(Boolean, default=True)
     user_role = Column(Enum(UserRole), default=UserRole.RECEP)
-    receipts = relationship('Receipt', backref='user', lazy=True)
-    comments = relationship('Comment', backref='user', lazy=True)
 
     def __str__(self):
         return self.name

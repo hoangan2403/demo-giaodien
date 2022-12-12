@@ -51,7 +51,7 @@ def categories_detail(room_id):
 
 @app.route("/signup", methods=['get', 'post'])
 def account_signup():
-    return render_template('signup.html')
+    return render_template('signin.html')
 
 
 @app.route("/admin")
