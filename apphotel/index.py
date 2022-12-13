@@ -14,7 +14,7 @@ def home():
                            kw=kw)
 
 @app.route("/list_room")
-def list_rom():
+def list_room():
     TypeRoom_id = request.args.get("TypeRoom_id")
     roo = utils.load_room(TypeRoom_id=TypeRoom_id)
     typeRoom = utils.load_typeroom()
@@ -24,7 +24,7 @@ def list_rom():
                            TypeRoom=typeRoom)
 
 @app.route("/list_room2")
-def list_rom2():
+def list_room2():
     TypeRoom_id = request.args.get("TypeRoom_id")
     roo = utils.load_room(TypeRoom_id=TypeRoom_id)
     typeRoom = utils.load_typeroom()
@@ -49,14 +49,9 @@ def categories_detail(room_id):
     return render_template('Chitietphong.html', Room=roo)
 
 
-@app.route("/signup", methods=['get', 'post'])
-def account_signup():
-    return render_template('signin.html')
-
-
-@app.route("/admin")
-def admin():
-    return render_template('admin.html')
+# @app.route("/admin/signup", methods=['get', 'post'])
+# def account_signup():
+#     return render_template('./admin/signup.html')
 
 
 if __name__ == '__main__':

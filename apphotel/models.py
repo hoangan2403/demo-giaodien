@@ -10,6 +10,7 @@ class UserRole(UserEnum):
     RECEP = 1
     ADMIN = 2
 
+
 class BaseModel(db.Model):
     __abstract__ = True
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -40,9 +41,9 @@ class Room(BaseModel):
 
 
 class Account(BaseModel, UserMixin):
-    name = Column(String(50), nullable=False)
-    username = Column(String(50), nullable=False, unique=True)
-    password = Column(String(50), nullable=False)
+    name = Column(String(50), nullable=True)
+    username = Column(String(50), nullable=True, unique=True)
+    password = Column(String(50), nullable=True)
     avatar = Column(String(100), nullable=False)
     active = Column(Boolean, default=True)
     user_role = Column(Enum(UserRole), default=UserRole.RECEP)

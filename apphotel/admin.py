@@ -1,10 +1,11 @@
-from apphotel import db, app
+from apphotel import db, app, utils
 from flask_admin import Admin, BaseView, expose
 from apphotel.models import TypeRoom, Room, Account
 from flask_admin.contrib.sqla import ModelView
+from flask import request, render_template, redirect, url_for
 
 admin = Admin(app=app, name="Quản trị khách sạn", template_mode='bootstrap4')
-app.secret_key='#@!$%^#$^$#!@%$@#$^%*&^%dsad!2321321r%^%$&^%Sfdfds'
+app.secret_key = '#@!$%^#$^$#!@%$@#$^%*&^%dsad!2321321r%^%$&^%Sfdfds'
 
 
 class ListRoomView(ModelView):
@@ -25,15 +26,33 @@ class ListAccount(ModelView):
 
 
 class SignUpView(BaseView):
-    @expose('/signup')
+    @expose('/', methods=['get', 'post'])
     def index(self):
-        return self.render('./signup.html')
+        return self.render('./admin/signup.html')
+
+
+@app.route('/', methods=['GET', 'POST'])
+def account_signup():
+    err_msg = ""
+    if request.method == ['POST']:
+        user_role = request.form.get('value')
+        name = request.form.get('name')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+    try:
+        if password.strip().__eq__(confirm_password.strip()):
+            utils.signup_account(name=name, username=username, password=password, user_role=user_role)
+            return redirect('index')
+        else:
+            err_msg = 'Mật khẩu không khớp'
+    except:
+        err_msg = 'Đã có lỗi xảy ra! Vui lòng quay lại sau!'
+
+    return render_template('signin.html', err_msg=err_msg)
 
 
 admin.add_view(ModelView(TypeRoom, db.session, name='Loại phòng'))
 admin.add_view(ListRoomView(Room, db.session, name='Quản lý phòng'))
 admin.add_view(ListAccount(Account, db.session, name="Quản lý tài khoản"))
 admin.add_view(SignUpView(name='Đăng ký tài khoản', endpoint='signup'))
-
-
-
