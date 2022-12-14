@@ -10,7 +10,6 @@ def read_json(path):
 
 
 def load_room(TypeRoom_id=None, kw=None, to_price=None, from_price=None):
-
     roo = Room.query.all()
     if TypeRoom_id:
         roo = Room.query.filter(Room.TypeRoom_id.__eq__(TypeRoom_id))
@@ -21,8 +20,8 @@ def load_room(TypeRoom_id=None, kw=None, to_price=None, from_price=None):
     if to_price:
         roo = Room.query.filter(Room.price.__le__(to_price))
 
-
     return roo
+
 
 def load_typeroom():
     return TypeRoom.query.all()
@@ -34,18 +33,17 @@ def get_room_by_id(room_id):
         if c.id == room_id:
             return c
 
+
 def check_login(user_name, password):
     if user_name and password:
         # password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
         return User.query.filter(User.username.__eq__(user_name.strip()),
                                  User.password.__eq__(password)).first()
 
+
 def account_signup(name, username, password, user_role):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-    account = Account(name=name.strip(), user=username.strip(), password=password, user_role=user_role)
+    account = Account(name=name.strip(), username=username.strip(), password=password, user_role=user_role)
 
     db.session.add(account)
     db.session.commit()
-
-
-
