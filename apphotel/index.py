@@ -5,13 +5,18 @@ import utils
 
 @app.route("/")
 def home():
+    TypeRoom_id = request.args.get("TypeRoom_id")
     typeroom = utils.load_typeroom()
-    roo = utils.load_room()
     kw = request.args.get("keyword")
-    return render_template('index.html',
+    from_price = request.args.get("from_price")
+    to_price = request.args.get("to_price")
+    roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
+    return render_template('Trangchu.html',
                            Room=roo,
                            TypeRoom=typeroom,
-                           kw=kw)
+                           kw=kw,
+                           from_price=from_price,
+                           to_price=to_price)
 
 @app.route("/list_room")
 def list_room():
@@ -26,13 +31,18 @@ def list_room():
 @app.route("/list_room2")
 def list_room2():
     TypeRoom_id = request.args.get("TypeRoom_id")
-    roo = utils.load_room(TypeRoom_id=TypeRoom_id)
-    typeRoom = utils.load_typeroom()
+    kw = request.args.get("keyword")
+    from_price = request.args.get("from_price")
+    to_price = request.args.get("to_price")
+    roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
+    typeroom = utils.load_typeroom()
 
-    return render_template('danhsachphong.html',
+    return render_template('danhsachphong2.html',
                            Room=roo,
-                           TypeRoom=typeRoom)
-
+                           TypeRoom=typeroom,
+                           kw=kw,
+                           to_price=to_price,
+                           from_price=from_price)
 
 @app.route("/phieuthue")
 def phieuthue_list():

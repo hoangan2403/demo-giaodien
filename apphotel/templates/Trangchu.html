@@ -37,10 +37,10 @@
                         </li>
                     </ul>
                     <form class="d-flex">
-                    <input class="form-control me-2" type="number" placeholder="Giá Thấp Nhất">
-                    <input class="form-control me-2" type="number" placeholder="Giá Cao Nhất">
-                    <input class="form-control me-2" name="keyword" type="text" placeholder="Search">
-                    <button class="btn-search" type="button">Tìm</button>
+                        <input class="form-control me-2" name="from_price" type="number" placeholder="Giá Thấp Nhất">
+                        <input class="form-control me-2" name="to_price" type="number" placeholder="Giá Cao Nhất">
+                        <input class="form-control me-2" name="keyword" type="text" placeholder="Search">
+                        <input class="btn-search" type="submit" value="Search">
                     </form>
                     <div class="admin"><a href="#">Tài Khoản</a></div>
                 </div>
@@ -54,23 +54,29 @@
         </div>
         <div class="tour-section-2">
             <div class="content-section">
-                <h2 class="text-white text-center">PHÒNG NỔI BẬT</h2>
+                <h2 class="text-background text-white text-center">PHÒNG NỔI BẬT</h2>
                 <p class="text-white text-center">Remember to book your tickets!</p>
+                {% for p in TypeRoom %}
                 <div class="place-list">
-                    {% for c in Room if c.TypeRoom_id == 1%}
-                        <div class="col">
-                            <div class="img-rom">
-                                <img src="{{ url_for('static', filename=c.image) }}" alt="Ảnh" class="place-img">
+                    <h3 class="text-background text-center text-white">Tầng {{ p.id }} ({{ p.name }})</h3>
+                        {% for c in Room if c.TypeRoom_id == p.id%}
+                            <div class="col">
+                                <div class="img-rom">
+                                    <a href="{{ url_for('categories_detail', room_id = c.id) }}">
+                                        <img src="{{ url_for('static', filename=c.image) }}" alt="Ảnh" class="place-img">
+                                    </a>
+
+                                </div>
+                                <div class="place-body">
+                                    <h2 class="place-heading">Phòng {{ c.name }}</h2>
+                                    <p class="place-time">{{ "{:,.0f}".format(c.price) }} VND/đêm</p>
+                                    <p class="place-content">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                                    <button class="btn-book js-place-buy-btn">Đặt Phòng</button>
+                                </div>
                             </div>
-                            <div class="place-body">
-                                <h2 class="place-heading">{{ c.name }}</h2>
-                                <p class="place-time">{{ "{:,.0f}".format(c.price) }} VND/đêm</p>
-                                <p class="place-content">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
-                                <button class="btn-book js-place-buy-btn">Đặt Phòng</button>
-                            </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
                 </div>
+                {% endfor %}
             </div>
         </div>
         <div>

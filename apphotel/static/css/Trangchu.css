@@ -62,6 +62,11 @@
     color:aliceblue;
     text-decoration: none;
 }
+.text-background {
+    padding: 40px 0 10px 0;
+    margin: 10px 0 10px 0;
+    font-size: 20px;
+}
 .background{
     margin-top: 0px;
     padding-top: 50%;
@@ -93,6 +98,7 @@
 .place-list{
     width: 70%;
     margin:auto;
+    overflow:hidden;
 }
 .place-body{
     background-color: #fff;

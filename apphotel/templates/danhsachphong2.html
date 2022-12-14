@@ -27,7 +27,7 @@
                             <ul class="menu-none">
                                 {% for p in TypeRoom %}
                                 <li class="nav-item">
-                                 <a class="nav-link" href="/list_rom2?styleRom_id={{ p.id }}">{{ p.name }}</a>
+                                 <a class="nav-link" href="/list_room2?TypeRoom_id={{ p.id }}">{{ p.name }}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -37,10 +37,10 @@
                         </li>
                     </ul>
                     <form class="d-flex">
-                    <input class="form-control me-2" type="number" placeholder="Giá Thấp Nhất">
-                    <input class="form-control me-2" type="number" placeholder="Giá Cao Nhất">
-                    <input class="form-control me-2" type="text" placeholder="Search">
-                    <button class="btn-search" type="button">Tìm</button>
+                        <input class="form-control me-2" name="from_price" type="number" placeholder="Giá Thấp Nhất">
+                        <input class="form-control me-2" name="to_price" type="number" placeholder="Giá Cao Nhất">
+                        <input class="form-control me-2" name="keyword" type="text" placeholder="Search">
+                        <input class="btn-search" type="submit" value="Search">
                     </form>
                     <div class="admin"><a href="#">Tài Khoản</a></div>
                 </div>
@@ -56,21 +56,24 @@
             <div class="content-section">
                 <h2 class="text-white text-center">PHÒNG NỔI BẬT</h2>
                 <p class="text-white text-center">Remember to book your tickets!</p>
-              {% for c in Room %}
                 <div class="place-list">
-                    <div class="col">
-                        <div class="img-rom">
-                            <img src="{{ url_for('static', filename=c.image) }}" alt="Ảnh" class="place-img">
-                        </div>
-                        <div class="place-body">
-                            <h2 class="place-heading">Phòng {{ c.name }}</h2>
-                            <p class="place-time">{{ "{:,.0f}".format(c.price) }} VND/đêm</p>
-                            <p class="place-content">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
-                            <button class="btn-book js-place-buy-btn">Đặt Phòng</button>
-                        </div>
-                    </div>
-                </div>
-              {% endfor %}
+                  {% for c in Room %}
+                   <div class="col">
+                       <div class="img-rom">
+                           <a href="{{ url_for('categories_detail', room_id = c.id) }}">
+                               <img src="{{ url_for('static', filename=c.image) }}" alt="Ảnh" class="place-img">
+                           </a>
+
+                       </div>
+                       <div class="place-body">
+                           <h2 class="place-heading">Phòng {{ c.name }}</h2>
+                           <p class="place-time">{{ "{:,.0f}".format(c.price) }} VND/đêm</p>
+                           <p class="place-content">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                           <button class="btn-book js-place-buy-btn">Đặt Phòng</button>
+                       </div>
+                   </div>
+                  {% endfor %}
+                <div>
             </div>
         </div>
         <div>

@@ -9,15 +9,20 @@ def read_json(path):
         return json.load(f)
 
 
-def load_room(TypeRoom_id=None, kw=None):
+def load_room(TypeRoom_id=None, kw=None, to_price=None, from_price=None):
 
     roo = Room.query.all()
     if TypeRoom_id:
         roo = Room.query.filter(Room.TypeRoom_id.__eq__(TypeRoom_id))
     if kw:
-        roo = Room.query.filter(Room.name.contains(kw))
-    return roo
+        roo = Room.query.filter(Room.description.contains(kw))
+    if from_price:
+        roo = Room.query.filter(Room.price.__ge__(from_price))
+    if to_price:
+        roo = Room.query.filter(Room.price.__le__(to_price))
 
+
+    return roo
 
 def load_typeroom():
     return TypeRoom.query.all()
