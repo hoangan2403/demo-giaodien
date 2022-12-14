@@ -2,6 +2,11 @@
 {% block title %} Lễ Tân {% endblock %}
 {% block content %}
 <div>
+    {% if err_msg %}
+    <div class="alert alert-danger">
+        {{ err_msg }}
+    </div>
+    {% endif %}
   <h1 class="header-text text-white text-center">Danh sách phòng trống</h1>
       {% for p in TypeRoom %}
       <h3 class="text-background text-center text-white">Tầng {{ p.id }} ({{ p.name }})</h3>

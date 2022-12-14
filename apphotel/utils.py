@@ -1,7 +1,7 @@
 import hashlib
 import json, os
 from apphotel import app, db
-from apphotel.models import TypeRoom, Room, Account
+from apphotel.models import TypeRoom, Room, Account, User
 
 
 def read_json(path):
@@ -34,6 +34,11 @@ def get_room_by_id(room_id):
         if c.id == room_id:
             return c
 
+def check_login(user_name, password):
+    if user_name and password:
+        # password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
+        return User.query.filter(User.username.__eq__(user_name.strip()),
+                                 User.password.__eq__(password)).first()
 
 def account_signup(name, username, password, user_role):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())

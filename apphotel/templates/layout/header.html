@@ -18,6 +18,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)">TÌM PHÒNG</a>
               </li>
+              {% if check %}
               <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)">DANH SÁCH PHIẾU</a>
                 <ul class="menu-none">
@@ -35,12 +36,19 @@
               <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)">DANH SÁCH</a>
               </li>
+              {% endif %}}
             </ul>
+            {% if check %}
             <form class="d-flex">
               <input class="form-control me-2" type="text" placeholder="Tra cứu thông tin khách hàng">
               <button class="btn-search" type="button">TRA CỨU</button>
             </form>
-            <div class="admin"><a href="{{ url_for('recep_signin') }}">Đăng nhập</a></div>
+            {% endif %}
+            {% if check %}
+              <div class="admin"><a href="{{ url_for('recep_signin') }}">{{ check.username }}</a></div>
+            {% else %}
+              <div class="admin"><a href="{{ url_for('recep_signin') }}">Đăng Nhập</a></div>
+            {% endif %}
           </div>
         </div>
       </nav>

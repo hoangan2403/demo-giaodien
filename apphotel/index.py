@@ -3,6 +3,7 @@ from apphotel import app
 import utils
 
 
+
 @app.route("/")
 def home():
     TypeRoom_id = request.args.get("TypeRoom_id")
@@ -11,7 +12,7 @@ def home():
     from_price = request.args.get("from_price")
     to_price = request.args.get("to_price")
     roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
-    return render_template('Trangchu.html',
+    return render_template('index.html',
                            Room=roo,
                            TypeRoom=typeroom,
                            kw=kw,
@@ -37,6 +38,7 @@ def list_room2():
     roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
     typeroom = utils.load_typeroom()
 
+
     return render_template('danhsachphong2.html',
                            Room=roo,
                            TypeRoom=typeroom,
@@ -61,14 +63,32 @@ def categories_detail(room_id):
 
 @app.route("/recep-login", methods=['get', 'post'])
 def recep_signin():
+    err_msg = ''
     if request.method.__eq__('POST'):
+        TypeRoom_id = request.args.get("TypeRoom_id")
+        typeroom = utils.load_typeroom()
+        kw = request.args.get("keyword")
+        from_price = request.args.get("from_price")
+        to_price = request.args.get("to_price")
+        roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
         username = request.form.get('username')
-        password = request.formm.get('password')
+        password = request.form.get('password')
+        check = utils.check_login(user_name=username, password=password)
+        if check:
+            err_msg = 'Chao mung ban '
+            return render_template('index.html',
+                                   check=check,
+                                   err_msg=err_msg,
+                                   Room=roo,
+                                   TypeRoom=typeroom,
+                                   kw=kw,
+                                   to_price=to_price,
+                                   from_price=from_price
+                                   )
+        else:
+            err_msg = 'User hoac mat khau khong chinh xac'
 
-    return render_template('signin.html')
-
-
-
+    return render_template('signin.html', err_msg=err_msg)
 
 
 if __name__ == '__main__':

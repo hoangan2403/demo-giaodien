@@ -41,6 +41,14 @@ class Room(BaseModel):
         return self.name
 
 
+class User(BaseModel):
+    name = Column(String(50), nullable=False)
+    username = Column(String(50), nullable=False, unique=True)
+    password = Column(String(50), nullable=False)
+
+    def __str__(self):
+        return self.name
+
 class Account(BaseModel, UserMixin):
     name = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
@@ -82,15 +90,18 @@ if __name__ == '__main__':
         # db.session.add_all([c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18])
         # db.session.commit()
 
-        password = str(hashlib.md5('123'.encode('utf-8')).hexdigest())
-
-        a1 = Account(name='Thuyền', username='thuyen123', password=password)
-        a2 = Account(name='Ân', username='an123', password=password, user_role=UserRole.ADMIN)
-        a3 = Account(name='Thuyền', username='hoang123', password=password, user_role=UserRole.ADMIN)
-
-        db.session.add_all([a1, a2, a3])  
-        db.session.commit()
-
-
+        # password = str(hashlib.md5('123'.encode('utf-8')).hexdigest())
+        # #
+        # a1 = Account(name='Thuyền', username='thuyen123', password=password)
+        # a2 = Account(name='Ân', username='an123', password=password, user_role=UserRole.ADMIN)
+        # a3 = Account(name='Thuyền', username='hoang123', password=password, user_role=UserRole.ADMIN)
+        #
+        # db.session.add_all([a1, a2, a3])
+        # db.session.commit()
+        #
+        #
         # db.create_all()
 
+        u1 = User(name='Thuyen', username='thuyen14', password='123456')
+        db.session.add(u1)
+        db.session.commit()
