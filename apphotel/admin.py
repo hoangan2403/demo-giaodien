@@ -1,4 +1,4 @@
-from apphotel import db, app, utils
+from apphotel import db, app, utils, dao
 from flask_admin import Admin, BaseView, expose
 from apphotel.models import TypeRoom, Room, Account
 from flask_admin.contrib.sqla import ModelView
@@ -21,35 +21,74 @@ class ListRoomView(ModelView):
 
 class ListAccount(ModelView):
     can_create = False
+    can_edit = False
     column_searchable_list = ['name', 'username']
+    column_exclude_list = ['password']
     column_sortable_list = ['name']
 
 
 class SignUpView(BaseView):
-    @expose('/', methods=['get', 'post'])
-    def index(self):
-        return self.render('./admin/signup.html')
+    @expose('/')
+    def SignUp(self):
+        return self.render('admin/signup.html')
 
 
-@app.route('/', methods=['GET', 'POST'])
-def account_signup():
-    err_msg = ""
-    if request.method == ['POST']:
-        user_role = request.form.get('value')
-        name = request.form.get('name')
-        username = request.form.get('username')
-        password = request.form.get('password')
-        confirm_password = request.form.get('confirm_password')
-    try:
-        if password.strip().__eq__(confirm_password.strip()):
-            utils.signup_account(name=name, username=username, password=password, user_role=user_role)
-            return redirect('index')
-        else:
-            err_msg = 'Mật khẩu không khớp'
-    except:
-        err_msg = 'Đã có lỗi xảy ra! Vui lòng quay lại sau!'
+class AccountSignupView(BaseView):
+    @expose('/', methods=['GET', 'POST'])
+    def account_signup(self):
+        err_msg = ""
+        succes_msg = ""
+        if request.method.__eq__('POST'):
+            user_role = request.form.get('value')
+            name = request.form.get('name')
+            username = request.form.get('username')
+            password = request.form.get('password')
+            confirm_password = request.form.get('confirm_password')
+        try:
+            if password.strip().__eq__(confirm_password.strip()):
+                succes_msg = 'Tạo tài khoản thành công !'
+                utils.account_signup(name=name,
+                                     username=username,
+                                     password=password,
+                                     user_role=user_role)
+                return succes_msg
 
-    return render_template('signin.html', err_msg=err_msg)
+                return self.render('admin/signup.html', succes_msg=succes_msg)
+            else:
+                err_msg = 'Mật khẩu không khớp'
+        except Exception as ex:
+            print(str(ex))
+            err_msg = 'Đã có lỗi xảy ra! Vui lòng quay lại sau!'
+        return self.render('admin/signup.html', err_msg=err_msg)
+
+
+# @app.route('/', methods=['GET', 'POST'])
+# def account_signup():
+#     err_msg = ""
+#     succes_msg = ""
+#     if request.method.__eq__('POST'):
+#         user_role = request.form.get('value')
+#         name = request.form.get('name')
+#         username = request.form.get('username')
+#         password = request.form.get('password')
+#         confirm_password = request.form.get('confirm_password')
+#     try:
+#         if password.strip().__eq__(confirm_password.strip()):
+#             succes_msg = 'Tạo tài khoản thành công !'
+#             utils.account_signup(name=name,
+#                                  username=username,
+#                                  password=password,
+#                                  user_role=user_role)
+#             return succes_msg
+#
+#             # return self.render('./admin/signup.html', succes_msg=succes_msg)
+#         else:
+#             err_msg = 'Mật khẩu không khớp'
+#     except Exception as ex:
+#         print(str(ex))
+#         err_msg = 'Đã có lỗi xảy ra! Vui lòng quay lại sau!'
+#     # return err_msg
+#     return render_template('admin/signup.html', err_msg=err_msg)
 
 
 admin.add_view(ModelView(TypeRoom, db.session, name='Loại phòng'))

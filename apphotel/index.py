@@ -49,9 +49,16 @@ def categories_detail(room_id):
     return render_template('Chitietphong.html', Room=roo)
 
 
-# @app.route("/admin/signup", methods=['get', 'post'])
-# def account_signup():
-#     return render_template('./admin/signup.html')
+@app.route("/recep-login", methods=['get', 'post'])
+def recep_signin():
+    if request.method.__eq__('POST'):
+        username = request.form.get('username')
+        password = request.formm.get('password')
+
+    return render_template('signin.html')
+
+
+
 
 
 if __name__ == '__main__':
