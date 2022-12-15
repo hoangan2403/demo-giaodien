@@ -9,7 +9,7 @@
             <h2 class="place-heading">{{ Room.name }}</h2>
             <p class="place-time">{{ "{:,.2f}".format(Room.price) }} VND/đêm</p>
             <p class="place-content">{{ Room.description }}</p>
-            <button class="btn-book js-place-buy-btn">Đặt Phòng</button>
+            <button class="btn btn-warning " href="/book-room"><a style="text-decoration:none; color:black" href="/book-room">Đặt Phòng</a></button>
         </div>
     </div>
 {% endblock %}

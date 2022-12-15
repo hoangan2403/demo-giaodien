@@ -67,6 +67,7 @@ body {
 .roms {
     display: flex;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
 .rom {
     height: 100%;

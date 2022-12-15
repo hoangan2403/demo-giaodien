@@ -18,7 +18,6 @@ class BaseModel(db.Model):
 
 
 class TypeRoom(BaseModel):
-
     name = Column(String(100), nullable=False)
     room = relationship('Room', backref='typeRoom', lazy=False)
 
@@ -27,7 +26,6 @@ class TypeRoom(BaseModel):
 
 
 class Room(BaseModel):
-
     name = Column(String(50), nullable=False)
     description = Column(String(255))
     max = Column(Integer, default=0)
@@ -48,6 +46,7 @@ class User(BaseModel):
 
     def __str__(self):
         return self.name
+
 
 class Account(BaseModel, UserMixin):
     name = Column(String(50), nullable=False)
@@ -94,14 +93,9 @@ if __name__ == '__main__':
         # #
         # a1 = Account(name='Thuyền', username='thuyen123', password=password)
         # a2 = Account(name='Ân', username='an123', password=password, user_role=UserRole.ADMIN)
-        # a3 = Account(name='Thuyền', username='hoang123', password=password, user_role=UserRole.ADMIN)
-        #
-        # db.session.add_all([a1, a2, a3])
+
+        # db.session.add_all([a1, a2])
         # db.session.commit()
         #
         #
-        # db.create_all()
-
-        u1 = User(name='Thuyen', username='thuyen14', password='123456')
-        db.session.add(u1)
-        db.session.commit()
+        db.create_all()

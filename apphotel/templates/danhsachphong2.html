@@ -84,3 +84,88 @@
         </div>
     </body>
 </html>
+
+
+<!--{% extends 'layout/base.html' %}-->
+<!--{% block title %} Lễ Tân {% endblock %}-->
+<!--{% block content %}-->
+
+
+<!--<nav class="navbar navbar-expand-sm navbar-dark bg-dark">-->
+<!--    <div class="container-fluid">-->
+<!--        <a class="navbar-brand" href="javascript:void(0)">-->
+<!--            <img src="{{ url_for('static', filename='images/Trangchu/logo2.jpg') }}" alt="name" class="logo-img">-->
+<!--        </a>-->
+<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">-->
+<!--                <span class="navbar-toggler-icon"></span>-->
+<!--            </button>-->
+<!--        <div class="collapse navbar-collapse" id="mynavbar">-->
+<!--            <ul class="navbar-nav me-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="javascript:void(0)">Trang chủ</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="javascript:void(0)">Ưu Đãi</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="javascript:void(0)">Loại Phòng</a>-->
+<!--                    <ul class="menu-none">-->
+<!--                        {% for p in TypeRoom %}-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link" href="/list_room2?TypeRoom_id={{ p.id }}">{{ p.name }}</a>-->
+<!--                        </li>-->
+<!--                        {% endfor %}-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="javascript:void(0)">Phòng Đã Đặt</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <form class="d-flex">-->
+<!--                <input class="form-control me-2" name="from_price" type="number" placeholder="Giá Thấp Nhất">-->
+<!--                <input class="form-control me-2" name="to_price" type="number" placeholder="Giá Cao Nhất">-->
+<!--                <input class="form-control me-2" name="keyword" type="text" placeholder="Search">-->
+<!--                <input class="btn-search" type="submit" value="Search">-->
+<!--            </form>-->
+<!--            <div class="admin"><a href="#">Tài Khoản</a></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+<!--<div class ="background">-->
+<!--    <div class="text-content">-->
+<!--        <h2 class="text-header">I-APPLESAMSUNG</h2>-->
+<!--        <div class="text-description">We had the best time playing at Venice Beach!</div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="tour-section-2">-->
+<!--    <div class="content-section">-->
+<!--        <h2 class="text-white text-center">PHÒNG NỔI BẬT</h2>-->
+<!--        <p class="text-white text-center">Remember to book your tickets!</p>-->
+<!--        <div class="place-list">-->
+<!--            {% for c in Room %}-->
+<!--            <div class="col">-->
+<!--                <div class="img-rom">-->
+<!--                    <a href="{{ url_for('categories_detail', room_id = c.id) }}">-->
+<!--                        <img src="{{ url_for('static', filename=c.image) }}" alt="Ảnh" class="place-img">-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <div class="place-body">-->
+<!--                    <h2 class="place-heading">Phòng {{ c.name }}</h2>-->
+<!--                    <p class="place-time">{{ "{:,.0f}".format(c.price) }} VND/đêm</p>-->
+<!--                    <p class="place-content">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>-->
+<!--                    <button class="btn-book js-place-buy-btn">Đặt Phòng</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div class="foodter">-->
+<!--                <h1>KHÁCH SẠN I-APPLESAMSUNG</h1>-->
+<!--                <p>Sự tin tưởng của các bạn là mục tiêu của chúng tôi, hãy đến với chúng tôi nếu bạn muốn trải nghiệm những những dịch vụ cao cấp nhất</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--{% endblock %}-->

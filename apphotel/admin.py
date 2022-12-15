@@ -1,4 +1,4 @@
-from apphotel import db, app, utils, dao
+from apphotel import db, app, utils
 from flask_admin import Admin, BaseView, expose
 from apphotel.models import TypeRoom, Room, Account, UserRole
 from flask_admin.contrib.sqla import ModelView

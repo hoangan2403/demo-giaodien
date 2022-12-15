@@ -68,10 +68,13 @@
     font-size: 20px;
 }
 .background{
+    width: 100%;
+    height: 100vh;
     margin-top: 0px;
     padding-top: 50%;
-    background: url('/static/images/Trangchu/slider1.jpg') top center / cover no-repeat;
+    background: url('/static/images/Trangchu/ATH.png') center / cover no-repeat;
     position:relative;
+    overflow: hidden;
 }
 .text-content{
     position:absolute;
@@ -87,7 +90,7 @@
     font-weight: 500;
 }
 .background .text-description{
-    font-size: 15;
+    font-size: 15px;
     margin-top: 25px;
 }
 .tour-section-2{

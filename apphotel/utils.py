@@ -27,6 +27,10 @@ def load_typeroom():
     return TypeRoom.query.all()
 
 
+def get_typeroom_by_id(id):
+    return TypeRoom.query.filter(TypeRoom.id.__eq__(id))
+
+
 def get_room_by_id(room_id):
     roo = Room.query.all()
     for c in roo:
@@ -34,9 +38,9 @@ def get_room_by_id(room_id):
             return c
 
 
-def check_login(user_name, password, user_role=UserRole.RECEP):
+def check_login(username, password, user_role=UserRole.RECEP):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-    return Account.query.filter(Account.username.__eq__(user_name.strip()),
+    return Account.query.filter(Account.username.__eq__(username.strip()),
                                 Account.password.__eq__(password),
                                 Account.user_role.__eq__(user_role)).first()
 

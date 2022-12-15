@@ -2,9 +2,12 @@
 {% block title %} Lễ Tân {% endblock %}
 {% block content %}
 <h1 class="header-text text-white text-center">Danh sách phòng trống</h1>
-      <h3 class="text-background text-center text-white">Danh sách</h3>
+<!--      <h3 class="text-background text-center text-white">{{  Type_id  }}</h3>-->
+        {% for a in Type_id %}
+            <h3 class="text-background text-center text-white">{{  a.name  }}</h3>
+        {% endfor %}
       <div class="roms">
-        {% for c in Room %}
+        {% for c in Room if c.active == 0 %}
         <div class="rom">
           <div class="rom-img">
             <a href="{{ url_for('categories_detail', room_id = c.id) }}"><img src="{{ url_for('static', filename=c.image) }}"></a>

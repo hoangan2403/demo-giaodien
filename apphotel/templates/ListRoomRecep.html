@@ -1,12 +1,38 @@
 {% extends 'layout/base.html' %}
+
+
 {% block title %} Lễ Tân {% endblock %}
+
+
+
 {% block content %}
+{% if current_user %}
 <div>
+
     {% if err_msg %}
     <div class="alert alert-danger">
-        {{ err_msg }}
+      <h4>{{ err_msg }}</h4>
     </div>
     {% endif %}
+
+
+  <h1 class="header-text text-danger text-center glyphicon-text-color">Danh sách phòng đang có khách</h1>
+   {% for p in TypeRoom %}
+      <h3 class="text-background text-center text-white">Tầng {{ p.id }} ({{ p.name }})</h3>
+      <div class="roms">
+        {% for c in Room if c.TypeRoom_id == p.id and c.active == 1 %}
+        <div class="rom">
+          <div class="rom-img">
+            <a href="{{ url_for('categories_detail', room_id = c.id) }}"><img src="{{ url_for('static', filename=c.image) }}"></a>
+          </div>
+          <div class="rom-text">
+            <p>{{ c.name }}</p>
+            <p>Giá: {{ "{:,.0f}".format(c.price) }}VND/Đêm</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
   <h1 class="header-text text-white text-center">Danh sách phòng trống</h1>
       {% for p in TypeRoom %}
       <h3 class="text-background text-center text-white">Tầng {{ p.id }} ({{ p.name }})</h3>
@@ -25,5 +51,5 @@
       </div>
       {% endfor %}
 </div>
-
+{% endif %}
 {% endblock %}
