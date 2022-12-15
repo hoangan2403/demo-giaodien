@@ -33,7 +33,7 @@
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
             <h5 class="card-title text-center mb-5 fw-light fs-5">Đăng nhập</h5>
-            <form>
+            <form method="post" action="{{ url_for('signin_admin') }}">
               <div class="form-floating mb-3">
                 <input type="username" id="username" name="username" class="form-control" id="floatingInput" placeholder="Nhập tên đăng nhập...">
                 <label for="username">Tên đăng nhập</label>
@@ -46,7 +46,7 @@
               <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
                 <label class="form-check-label" for="rememberPasswordCheck">
-                  Quên mật khẩu
+                  Lưu mật khẩu
                 </label>
               </div>
               <div class="d-grid text-center">

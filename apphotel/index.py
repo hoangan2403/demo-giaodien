@@ -1,6 +1,8 @@
-from flask import render_template, request
-from apphotel import app
+from flask import render_template, request, redirect, url_for
+from flask_login import login_user
+from apphotel import app, login
 import utils
+from apphotel.models import UserRole
 
 
 
@@ -75,7 +77,7 @@ def recep_signin():
         password = request.form.get('password')
         check = utils.check_login(user_name=username, password=password)
         if check:
-            err_msg = 'Chao mung ban '
+            err_msg = 'Chào mừng đến với trang Lễ Tân '
             return render_template('index.html',
                                    check=check,
                                    err_msg=err_msg,
@@ -86,9 +88,27 @@ def recep_signin():
                                    from_price=from_price
                                    )
         else:
-            err_msg = 'User hoac mat khau khong chinh xac'
+            err_msg = 'Tài khoản hoặc mật khẩu không chính xác !!!'
 
     return render_template('signin.html', err_msg=err_msg)
+
+
+@app.route('/admin-login', methods=['post'])
+def signin_admin():
+    username = request.form[ 'username']
+    password = request.form[ 'password']
+
+    user = utils.check_login_admin(username=username,
+                                   password=password)
+    if user:
+        login_user(user=user)
+
+    return redirect('/admin')
+
+
+@login.user_loader
+def load_user(user_id):
+    return utils.get_user_by_id(user_id)
 
 
 if __name__ == '__main__':

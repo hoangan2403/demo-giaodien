@@ -1,14 +1,32 @@
 from apphotel import db, app, utils, dao
 from flask_admin import Admin, BaseView, expose
-from apphotel.models import TypeRoom, Room, Account
+from apphotel.models import TypeRoom, Room, Account, UserRole
 from flask_admin.contrib.sqla import ModelView
 from flask import request, render_template, redirect, url_for
+from flask_login import current_user, logout_user
 
 admin = Admin(app=app, name="Quản trị khách sạn", template_mode='bootstrap4')
 app.secret_key = '#@!$%^#$^$#!@%$@#$^%*&^%dsad!2321321r%^%$&^%Sfdfds'
 
 
-class ListRoomView(ModelView):
+class AuthenticatedModelView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.user_role.__eq__(UserRole.ADMIN)
+
+
+class AuthenticatedView(BaseView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+
+class LogoutView(AuthenticatedView):
+    @expose('/')
+    def index(self):
+        logout_user()
+        return redirect('/admin')
+
+
+class ListRoomView(AuthenticatedModelView):
     can_view_details = True
     can_export = True
     can_edit = True
@@ -19,7 +37,7 @@ class ListRoomView(ModelView):
     column_sortable_list = ['name', 'price']
 
 
-class ListAccount(ModelView):
+class ListAccount(AuthenticatedModelView):
     can_create = False
     can_edit = False
     column_searchable_list = ['name', 'username']
@@ -27,7 +45,7 @@ class ListAccount(ModelView):
     column_sortable_list = ['name']
 
 
-class AccountSignupView(BaseView):
+class AccountSignupView(AuthenticatedView):
     @expose('/', methods=['GET', 'POST'])
     def account_signup(self):
         err_msg = ''
@@ -53,7 +71,8 @@ class AccountSignupView(BaseView):
         return self.render('admin/signup.html', err_msg=err_msg)
 
 
-admin.add_view(ModelView(TypeRoom, db.session, name='Loại phòng'))
+admin.add_view(AuthenticatedModelView(TypeRoom, db.session, name='Loại phòng'))
 admin.add_view(ListRoomView(Room, db.session, name='Quản lý phòng'))
 admin.add_view(ListAccount(Account, db.session, name="Quản lý tài khoản"))
 admin.add_view(AccountSignupView(name='Đăng ký tài khoản', endpoint='signup'))
+admin.add_view(LogoutView(name='Đăng xất'))
