@@ -62,6 +62,30 @@ def book_room(room_id):
     return render_template('BookingForm.html', Room=roo)
 
 
+@app.route("/book-room//export/<int:room_id>")
+def export_booking_form(room_id):
+    err_msg = ''
+    if request.method.__eq__('POST'):
+        name_1 = request.form['name1']
+        citizen_id = request.form['citizen_id']
+        address = request.form['address']
+        country = request.form['country']
+        check_in_day = request.form['check_in_day']
+        check_out_day = request.form['check_out_day']
+        room = utils.check_room(room_id)
+        if room:
+            succes_msg = 'Đặt phòng thành công'
+            return check_in_day
+            # utils.BooKing(name_1=name_1, typecustomer_1=country, citizen_id_1=citizen_id,
+            #                      address_1=address, room_id=room_id, check_in_day=check_in_day,
+            #                      check_out_day=check_out_day)
+
+            # return render_template('ExportBookingForm.html', succes_msg=succes_msg)
+        else:
+            err_msg = 'Phòng đã có khách đặt !!!'
+    return render_template('BookingForm.html', err_msg=err_msg)
+
+
 @app.route("/phieuthue")
 def phieuthue_list():
     typeRoom = utils.load_typeroom()

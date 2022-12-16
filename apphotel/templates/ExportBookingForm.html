@@ -1,0 +1,17 @@
+{% extends 'layout/base.html' %}
+{% block title %} Lễ Tân {% endblock %}
+{% block content %}
+
+{% if succes_msg %}
+<div class="alert alert-success">
+	<h3>{{ succes_msg }}</h3>
+</div>
+{% endif %}
+
+<div class="signup-form">
+    <form action="/export/book-room/<int:room_id>" method="post" class="form-horizontal" >
+
+    </form>
+</div>
+
+{% endblock %}

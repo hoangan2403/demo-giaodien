@@ -54,6 +54,11 @@ button:hover::before {
     width: 30%;
 }
 </style>
+{% if err_msg %}
+<div class="alert alert-danger">
+	<h3>{{ err_msg }}</h3>
+</div>
+{% endif %}
 <section style="background-color: #fff; width: 100%; height: 100%">
         <div class="rom-detail bg-white w-100" style="display: flex">
         <div class="img-rom-detail w-50" style="margin: 5% 5%" >
@@ -66,7 +71,25 @@ button:hover::before {
             <p>Số người ở tối đa: {{ Room.max }}</p>
         </div>
         </div>
-<form action="BookingForm.html" style="background-color: #fff; padding: 10px 20px; display: flex; justify-content: space-around">
+<form action="BookingForm.html"
+      style="background-color: #fff; padding: 1% 1%; display: flex; justify-content: space-around"
+      method="post">
+
+    <div style="width: 12%;margin-right: 2%">
+        <div class="md-form md-outline input-with-post-icon datepicker w-100" style="margin: 25% 0">
+            <label for="check_in_day">Ngày nhận phòng</label>
+            <input placeholder="Select date" type="date" id="check_in_day" name="check_in_day" class="form-control">
+
+        </div>
+
+
+        <div class="md-form md-outline input-with-post-icon datepicker w-100" style="margin:25% 0">
+            <label for="check_out_day">Ngày trả phòng</label>
+            <input placeholder="Select date" type="date" id="check_out_day" name="check_out_day" class="form-control">
+
+        </div>
+    </div>
+
     <div class="size-info-customer">
         <div class="mb-3">
       <label for="name1" class="form-label">Họ tên khách 1</label>
@@ -82,8 +105,8 @@ button:hover::before {
     </div>
     <div class="mb-3">
         <label for="country" class="form-label">Quốc tịch</label>
-      <select class="form-select" aria-label="Default select example" id="country">
-          <option selected>Việt Nam</option>
+      <select class="form-select" aria-label="Default select example" id="country" name="country">
+          <option value="0" selected>Việt Nam</option>
           <option value="1">Nước ngoài</option>
       </select>
     </div>

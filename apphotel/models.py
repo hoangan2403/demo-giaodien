@@ -39,13 +39,13 @@ class Room(BaseModel):
         return self.name
 
 
-class User(BaseModel):
-    name = Column(String(50), nullable=False)
-    username = Column(String(50), nullable=False, unique=True)
-    password = Column(String(50), nullable=False)
-
-    def __str__(self):
-        return self.name
+# class User(BaseModel):
+#     name = Column(String(50), nullable=False)
+#     username = Column(String(50), nullable=False, unique=True)
+#     password = Column(String(50), nullable=False)
+#
+#     def __str__(self):
+#         return self.name
 
 
 class Account(BaseModel, UserMixin):
@@ -58,6 +58,30 @@ class Account(BaseModel, UserMixin):
 
     def __str__(self):
         return self.name
+
+
+class Customer(BaseModel):
+    Name = Column(String(50), nullable=False, unique=True)
+    Country = Column(Boolean, default=False)
+    Citizen_id = Column(String(50))
+    Address = Column(String(150))
+
+    def __str__(self):
+        return self.Name
+
+
+class BookingForm(BaseModel):
+    Room_id = Column(Integer, ForeignKey(Room.id), nullable=False)
+    DayBook = Column(DateTime, default=datetime.now())
+    Check_inDate = Column(DateTime, default=DayBook)
+    # (Check_inDate - DayBook).days
+    Check_outDay = Column(DateTime)
+    Cus1 = Column(ForeignKey(Customer.Name), nullable=False)
+    Cus2 = Column(ForeignKey(Customer.Name), nullable=True)
+    Cus3 = Column(ForeignKey(Customer.Name), nullable=True)
+
+    def __str__(self):
+        return self.idForm
 
 
 if __name__ == '__main__':
@@ -96,6 +120,5 @@ if __name__ == '__main__':
 
         # db.session.add_all([a1, a2])
         # db.session.commit()
-        #
-        #
+
         db.create_all()

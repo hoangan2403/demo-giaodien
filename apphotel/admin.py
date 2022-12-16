@@ -50,7 +50,7 @@ class AccountSignupView(AuthenticatedView):
     def account_signup(self):
         err_msg = ''
         if request.method.__eq__('POST'):
-            user_role = request.form.get('value')
+            user_role = request.form.get('userrole')
             name = request.form.get('name')
             username = request.form.get('username')
             password = request.form.get('password')
