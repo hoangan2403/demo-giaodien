@@ -1,55 +1,143 @@
 {% extends 'layout/base.html' %}
 {% block title %} Lễ Tân {% endblock %}
 {% block content %}
+<style>
+    button {
+ padding: 15px 25px;
+ border: unset;
+ border-radius: 15px;
+ color: #212121;
+ z-index: 1;
+ background: #e8e8e8;
+ position: relative;
+ font-weight: 1000;
+ font-size: 17px;
+ -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ transition: all 250ms;
+ overflow: hidden;
+}
 
-<table class="text-center table table-bordered table-dark">
-  <thead>
-    <tr>
-      <th colspan="6">PHIẾU ĐẶT PHÒNG</th>
+button::before {
+ content: "";
+ position: absolute;
+ top: 0;
+ left: 0;
+ height: 100%;
+ width: 0;
+ border-radius: 15px;
+ background-color: #212121;
+ z-index: -1;
+ -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ transition: all 250ms
+}
 
-    </tr>
-  <tr>
-      <th scope="col">Họ tên người đặt:</th>
-      <th scope="col">Phòng đặt:</th>
+button:hover {
+ color: #e8e8e8;
+}
 
-    </tr>
-  <tr>
-      <th scope="col">Ngày nhận phòng:</th>
-      <th scope="col">Ngày trả phòng:</th>
+button:hover::before {
+ width: 100%;
+}
 
-    </tr>
+.taga {
+    color: firebrick;
+    text-decoration:none
+}
 
-  </thead>
-  <tbody>
-  <tr>
-      <<td style="width: 20%">1</td>
-      <td style="width: 20%">2</td>
-        <td style="width: 20%">3</td>
-        <td style="width: 20%">4</td>
-        <td style="width: 20%">5</td>
-    </tr>
-    <tr>
-      <td style="width: 20%">1</td>
-      <td style="width: 20%">2</td>
-        <td style="width: 20%">3</td>
-        <td style="width: 20%">4</td>
-        <td style="width: 20%">5</td>
-    </tr>
-    <tr>
-      <td style="width: 20%">1</td>
-      <td style="width: 20%">2</td>
-        <td style="width: 20%">3</td>
-        <td style="width: 20%">4</td>
-        <td style="width: 20%">5</td>
-    </tr>
-    <tr>
-      <td style="width: 20%">1</td>
-      <td style="width: 20%">2</td>
-        <td style="width: 20%">3</td>
-        <td style="width: 20%">4</td>
-        <td style="width: 20%">5</td>
-    </tr>
-  </tbody>
-</table>
+.taga:hover {
+    color: firebrick;
+    text-decoration:none
+}
+.size-info-customer {
+    width: 30%;
+}
+</style>
+<section style="background-color: #fff; width: 100%; height: 100%">
+        <div class="rom-detail bg-white w-100" style="display: flex">
+        <div class="img-rom-detail w-50" style="margin: 5% 5%" >
+            <img src="{{ url_for('static', filename=Room.image) }}" alt="Ảnh">
+        </div>
+        <div class="place-body w-50" style="margin-top: 5%">
+            <h1 style="font-size: 40px" class="place-heading">{{ Room.name }}</h1>
+            <h4 class="place-time">{{ "{:,.0f}".format(Room.price) }} VND/đêm</h4>
+            <h5 class="place-content">{{ Room.description }}</h5>
+            <p>Số người ở tối đa: {{ Room.max }}</p>
+        </div>
+        </div>
+<form action="BookingForm.html" style="background-color: #fff; padding: 10px 20px; display: flex; justify-content: space-around">
+    <div class="size-info-customer">
+        <div class="mb-3">
+      <label for="name1" class="form-label">Họ tên khách 1</label>
+      <input type="text" class="form-control" id="name1" required placeholder="Nhập họ và tên">
+    </div>
+    <div class="mb-3">
+      <label for="citizen_id" class="form-label">CMND/CCCD</label>
+      <input type="number" class="form-control" id="citizen_id" required placeholder="Nhập CMND/CCCD">
+    </div>
+    <div class="mb-3">
+      <label for="address" class="form-label">Địa chỉ</label>
+      <input type="text" class="form-control" id="address" required placeholder="Nhập địa chỉ">
+    </div>
+    <div class="mb-3">
+        <label for="country" class="form-label">Quốc tịch</label>
+      <select class="form-select" aria-label="Default select example" id="country">
+          <option selected>Việt Nam</option>
+          <option value="1">Nước ngoài</option>
+      </select>
+    </div>
+    </div>
+    <div class="size-info-customer">
+        <div class="mb-3">
+      <label for="name2" class="form-label">Họ tên khách 2</label>
+      <input type="text" class="form-control" id="name2" placeholder="Nhập họ và tên">
+    </div>
+    <div class="mb-3">
+      <label for="citizen_id2" class="form-label">CMND/CCCD</label>
+      <input type="number" class="form-control" id="citizen_id2" placeholder="Nhập CMND/CCCD">
+    </div>
+    <div class="mb-3">
+      <label for="address2" class="form-label">Địa chỉ</label>
+      <input type="text" class="form-control" id="address2" placeholder="Nhập địa chỉ">
+    </div>
+    <div class="mb-3">
+        <label for="country2" class="form-label">Quốc tịch</label>
+      <select class="form-select" aria-label="Default select example" id="country2">
+          <option selected>Việt Nam</option>
+          <option value="1">Nước ngoài</option>
+      </select>
+    </div>
+    </div>
+    {% if Room.max == 3 %}
+    <div class="size-info-customer">
+        <div class="mb-3">
+      <label for="name3" class="form-label">Họ tên khách 3</label>
+      <input type="text" class="form-control" id="name3" placeholder="Nhập họ và tên">
+    </div>
+    <div class="mb-3">
+      <label for="citizen_id3" class="form-label">CMND/CCCD</label>
+      <input type="number" class="form-control" id="citizen_id3" placeholder="Nhập CMND/CCCD">
+    </div>
+    <div class="mb-3">
+      <label for="address3" class="form-label">Địa chỉ</label>
+      <input type="text" class="form-control" id="address3" placeholder="Nhập địa chỉ">
+    </div>
+    <div class="mb-3">
+        <label for="country3" class="form-label">Quốc tịch</label>
+      <select class="form-select" aria-label="Default select example" id="country3">
+          <option selected>Việt Nam</option>
+          <option value="1">Nước ngoài</option>
+      </select>
+    </div>
+    </div>
+    {% endif %}
+</form>
 
+    <div class="w-100 h-100" style="margin-left: 50%; transform: translate(-5%, 0%); padding-bottom: 2%">
+        <button type="submit">
+            <a class="taga"  href="{{ url_for('book_room', room_id = Room.id) }}">Đặt Phòng</a>
+        </button>
+    </div>
+</section>
 {% endblock %}

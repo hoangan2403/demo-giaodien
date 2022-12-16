@@ -32,7 +32,7 @@ def list_room():
                            TypeRoom=typeRoom,
                            Type_id=Type_id)
 
-@app.route("/list_room2")
+@app.route("/list_room")
 def list_room2():
     TypeRoom_id = request.args.get("TypeRoom_id")
     kw = request.args.get("keyword")
@@ -56,9 +56,10 @@ def list_room_recep():
     return render_template('ListRoomRecep.html',TypeRoom=TypeRoom, Room=Room, user=current_user)
 
 
-@app.route("/book-room")
-def book_room():
-    return render_template('BookingForm.html')
+@app.route("/book-room/<int:room_id>")
+def book_room(room_id):
+    roo = utils.get_room_by_id(room_id)
+    return render_template('BookingForm.html', Room=roo)
 
 
 @app.route("/phieuthue")
@@ -126,7 +127,7 @@ def recep_login():
         if user:
             err_msg = 'Chào mừng đến với trang Lễ Tân'
             login_user(user=user)
-            return render_template('index.html', err_msg=err_msg, user=user)
+            return render_template('Trangchu.html', err_msg=err_msg, user=user)
         else:
             err_msg = 'Tài khoản hoặc mật khẩu không chính xác !!!'
     return render_template('signin.html', err_msg=err_msg)
