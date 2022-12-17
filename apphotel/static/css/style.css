@@ -16,8 +16,8 @@
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background-color: black;
 }
 .header-text{
@@ -47,12 +47,16 @@ body {
     border-radius: 5px;
 }
 .admin>a{
+    font-size: large;
     color:aliceblue;
     text-decoration: none;
 }
 .admin:hover {
     background-color: #212529;
-    color:#fff;
+}
+
+.admin:hover a{
+    color: teal;
 }
 .menu-none {
     display:none;
@@ -97,7 +101,7 @@ body {
     padding: 0px;
     font-size: 13px;
 }
-.foodter {
+.footer {
     padding: 45px 90px;
     background-color: #212529;
     color: #6c757d;
