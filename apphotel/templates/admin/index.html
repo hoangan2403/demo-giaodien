@@ -28,6 +28,43 @@
 <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
 {% if current_user.is_authenticated %}
 
+<h1 class="text-center text-success">TRANG CHỦ QUẢN TRỊ BÁN HÀNG</h1>
+<h3>Chào <span class="text-danger">{{ current_user.name }}</span>!</h3>
+
+<div class="row">
+    <div class="col-md-5 col-sm-12">
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Tên danh mục</th>
+                <th>Số lượng SP</th>
+            </tr>
+            {% for s in stats %}
+            <tr>
+                <td>{{ s[0] }}</td>
+                <td>{{ s[1] }}</td>
+                <td>{{ s[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-md-7 col-sm-12">
+        <canvas id="cateStats"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/my-chart.js') }}"></script>
+<script>
+  let data = [], labels=[];
+  {% for s in stats %}
+    data.push({{ s[2] }})
+    labels.push('{{ s[1] }}')
+  {% endfor %}
+  window.onload = function() {
+    drawCateStats(labels, data)
+  }
+</script>
 
 {% else %}
   <div class="container">

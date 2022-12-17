@@ -1,11 +1,11 @@
 from apphotel import db, app, utils
-from flask_admin import Admin, BaseView, expose
+from flask_admin import Admin, BaseView, expose, AdminIndexView
 from apphotel.models import TypeRoom, Room, Account, UserRole
 from flask_admin.contrib.sqla import ModelView
 from flask import request, render_template, redirect, url_for
 from flask_login import current_user, logout_user
 
-admin = Admin(app=app, name="Quản trị khách sạn", template_mode='bootstrap4')
+# admin = Admin(app=app, name="Quản trị khách sạn", template_mode='bootstrap4')
 app.secret_key = '#@!$%^#$^$#!@%$@#$^%*&^%dsad!2321321r%^%$&^%Sfdfds'
 
 
@@ -71,6 +71,25 @@ class AccountSignupView(AuthenticatedView):
         return self.render('admin/signup.html', err_msg=err_msg)
 
 
+class MyAdminView(AdminIndexView):
+    @expose('/')
+    def index(self):
+        stats = utils.count_product_by_cate()
+        return self.render('admin/index.html', stats=stats)
+
+
+class StatsView(AuthenticatedView):
+    @expose('/')
+    def index(self):
+        stats = utils.stats_revenue_by_prod(kw=request.args.get('kw'),
+                                          from_date=request.args.get('from_date'),
+                                          to_date=request.args.get('to_date'))
+        return self.render('admin/stats.html', stats=stats)
+
+
+
+admin = Admin(app=app, name='Quản trị khách sạn', template_mode='bootstrap4', index_view=MyAdminView())
+admin.add_view(StatsView(name='Thống kê - báo cáo'))
 admin.add_view(AuthenticatedModelView(TypeRoom, db.session, name='Loại phòng'))
 admin.add_view(ListRoomView(Room, db.session, name='Quản lý phòng'))
 admin.add_view(ListAccount(Account, db.session, name="Quản lý tài khoản"))

@@ -84,6 +84,19 @@ class BookingForm(BaseModel):
         return self.idForm
 
 
+class Receipt(BaseModel):
+    created_date = Column(DateTime, default=datetime.now())
+    user_id = Column(Integer, ForeignKey(Customer.id), nullable=False)
+    details = relationship('ReceiptDetails', backref='receipt', lazy=True)
+
+
+class ReceiptDetails(BaseModel):
+    quantity = Column(Integer, default=0)
+    price = Column(Float, default=0)
+    product_id = Column(Integer, ForeignKey(Room.id), nullable=False)
+    receipt_id = Column(Integer, ForeignKey(Receipt.id), nullable=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         # p1 = TypeRoom(name='Standard')

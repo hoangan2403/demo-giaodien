@@ -1,8 +1,8 @@
 import hashlib
 import json, os
 from apphotel import app, db
-from apphotel.models import TypeRoom, Room, Account, UserRole, Customer, BookingForm
-
+from apphotel.models import TypeRoom, Room, Account, UserRole, Customer, BookingForm, ReceiptDetails, Receipt
+from sqlalchemy import func
 
 def read_json(path):
     with open(path, "r") as f:
@@ -104,3 +104,27 @@ class BooKing:
         db.session.add(customer_3)
         db.session.add(booking_form)
         db.session.commit()
+
+
+
+def count_product_by_cate():
+    return db.session.query(TypeRoom.id, TypeRoom.name, func.count(Room.id)) \
+        .join(Room, Room.TypeRoom_id.__eq__(TypeRoom.id), isouter=True) \
+        .group_by(TypeRoom.id).order_by(-TypeRoom.name).all()
+
+
+def stats_revenue_by_prod(kw=None, from_date=None, to_date=None):
+    query = db.session.query(Room.id, Room.name, func.sum(ReceiptDetails.quantity * ReceiptDetails.price)) \
+        .join(ReceiptDetails, ReceiptDetails.product_id.__eq__(Room.id)) \
+        .join(Receipt, ReceiptDetails.receipt_id.__eq__(Receipt.id))
+
+    if kw:
+        query = query.filter(Room.name.contains(kw))
+
+    if from_date:
+        query = query.filter(Receipt.created_date.__ge__(from_date))
+
+    if to_date:
+        query = query.filter(Receipt.created_date.__le__(to_date))
+
+    return query.group_by(Room.id).all()
