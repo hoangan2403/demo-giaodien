@@ -62,28 +62,47 @@ def book_room(room_id):
     return render_template('BookingForm.html', Room=roo)
 
 
-@app.route("/book-room//export/<int:room_id>")
+@app.route("/book-room/<int:room_id>", methods=['get', 'post'])
 def export_booking_form(room_id):
     err_msg = ''
+    roo = utils.get_room_by_id(room_id)
     if request.method.__eq__('POST'):
         name_1 = request.form['name1']
         citizen_id = request.form['citizen_id']
         address = request.form['address']
         country = request.form['country']
+        name_2 = request.form['name2']
+        citizen_id2 = request.form['citizen_id2']
+        address2 = request.form['address2']
+        country2 = request.form['country2']
+        if roo.max == 3:
+            name_3 = request.form['name3']
+            citizen_id3 = request.form['citizen_id3']
+            address3 = request.form['address3']
+            country3 = request.form['country3']
         check_in_day = request.form['check_in_day']
         check_out_day = request.form['check_out_day']
         room = utils.check_room(room_id)
         if room:
-            succes_msg = 'Đặt phòng thành công'
-            return check_in_day
-            # utils.BooKing(name_1=name_1, typecustomer_1=country, citizen_id_1=citizen_id,
-            #                      address_1=address, room_id=room_id, check_in_day=check_in_day,
-            #                      check_out_day=check_out_day)
+            err_msg = 'Đặt phòng thành công'
+            if room.max==2:
+                utils.BooKing.booking_room_2(name_1=name_1, typecustomer_1=country, citizen_id_1=citizen_id,
+                                     address_1=address, room_id=room_id, name_2=name_2, typecustomer_2=country2,
+                                     citizen_id_2=citizen_id2,
+                                     address_2=address2, check_in_day=check_in_day,
+                                     check_out_day=check_out_day)
 
-            # return render_template('ExportBookingForm.html', succes_msg=succes_msg)
+                return render_template('ExportBookingForm.html', err_msg=err_msg)
+            else:
+                utils.BooKing.booking_room_3(name_1=name_1, typecustomer_1=country, citizen_id_1=citizen_id,
+                                     address_1=address, room_id=room_id, name_2=name_2, typecustomer_2=country2,
+                                     citizen_id_2=citizen_id2,
+                                     address_2=address2, name_3=name_3, typecustomer_3=country3, citizen_id_3=citizen_id3,
+                                     address_3=address3, check_in_day=check_in_day,
+                                     check_out_day=check_out_day)
         else:
             err_msg = 'Phòng đã có khách đặt !!!'
-    return render_template('BookingForm.html', err_msg=err_msg)
+    return render_template('BookingForm.html', Room=roo, err_msg=err_msg)
 
 
 @app.route("/phieuthue")
@@ -108,34 +127,6 @@ def categories_detail(room_id):
 #     return render_template('ListRoomRecep.html', TypeRoom=TypeRoom, Room=Room)
 
 
-# @app.route("/recep-login", methods=['get', 'post'])
-# def recep_signin():
-#     err_msg = ''
-#     if request.method.__eq__('POST'):
-#         TypeRoom_id = request.args.get("TypeRoom_id")
-#         typeroom = utils.load_typeroom()
-#         kw = request.args.get("keyword")
-#         from_price = request.args.get("from_price")
-#         to_price = request.args.get("to_price")
-#         roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
-#         username = request.form.get('username')
-#         password = request.form.get('password')
-#         check = utils.check_login(user_name=username, password=password)
-#         if check:
-#             err_msg = 'Chào mừng đến với trang Lễ Tân '
-#             return render_template('ListRoomRecep.html',
-#                                    check=check,
-#                                    err_msg=err_msg,
-#                                    Room=roo,
-#                                    TypeRoom=typeroom,
-#                                    kw=kw,
-#                                    to_price=to_price,
-#                                    from_price=from_price
-#                                    )
-#         else:
-#             err_msg = 'Tài khoản hoặc mật khẩu không chính xác !!!'
-#
-#     return render_template('signin.html', err_msg=err_msg)
 
 
 @app.route("/recep-login", methods=['get', 'post'])
