@@ -1,8 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_user, current_user, logout_user
-from apphotel import app, login
+from apphotel import app, login, utils
 from apphotel.decorators import anonymous_user
-import utils
 from apphotel.models import UserRole
 
 
@@ -21,6 +20,7 @@ def home():
                            from_price=from_price,
                            to_price=to_price)
 
+
 @app.route("/list_room")
 def list_room():
     TypeRoom_id = request.args.get("TypeRoom_id")
@@ -31,6 +31,7 @@ def list_room():
                            Room=roo,
                            TypeRoom=typeRoom,
                            Type_id=Type_id)
+
 
 @app.route("/list_room")
 def list_room2():
@@ -53,7 +54,7 @@ def list_room2():
 def list_room_recep():
     TypeRoom = utils.load_typeroom()
     Room = utils.load_room()
-    return render_template('ListRoomRecep.html',TypeRoom=TypeRoom, Room=Room, user=current_user)
+    return render_template('ListRoomRecep.html', TypeRoom=TypeRoom, Room=Room, user=current_user)
 
 
 @app.route("/book-room/<int:room_id>")
@@ -85,21 +86,30 @@ def export_booking_form(room_id):
         room = utils.check_room(room_id)
         if room:
             err_msg = 'Đặt phòng thành công'
-            if room.max==2:
-                utils.BooKing.booking_room_2(name_1=name_1, typecustomer_1=country, citizen_id_1=citizen_id,
-                                     address_1=address, room_id=room_id, name_2=name_2, typecustomer_2=country2,
-                                     citizen_id_2=citizen_id2,
-                                     address_2=address2, check_in_day=check_in_day,
-                                     check_out_day=check_out_day)
-
+            if room.max == 2:
+                try:
+                    Cus1 = utils.add_customer(name=name_1, country=country, citizen_id=citizen_id, address=address,
+                                              room_id=room_id)
+                    Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
+                                              room_id=room_id)
+                    utils.add_booking(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
+                                      Customer_id=Cus1.id)
+                except:
+                    err_msg = 'Hệ thống lỗi'
                 return render_template('ExportBookingForm.html', err_msg=err_msg)
             else:
-                utils.BooKing.booking_room_3(name_1=name_1, typecustomer_1=country, citizen_id_1=citizen_id,
-                                     address_1=address, room_id=room_id, name_2=name_2, typecustomer_2=country2,
-                                     citizen_id_2=citizen_id2,
-                                     address_2=address2, name_3=name_3, typecustomer_3=country3, citizen_id_3=citizen_id3,
-                                     address_3=address3, check_in_day=check_in_day,
-                                     check_out_day=check_out_day)
+                try:
+                    Cus1 = utils.add_customer(name=name_1, country=country, citizen_id=citizen_id, address=address,
+                                              room_id=room_id)
+                    Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
+                                              room_id=room_id)
+                    Cus3 = utils.add_customer(name=name_3, country=country3, citizen_id=citizen_id3, address=address3,
+                                              room_id=room_id)
+                    utils.add_booking(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
+                                      Customer_id=Cus1.id)
+                except:
+                    err_msg = 'Hệ thống lỗi'
+                return render_template('ExportBookingForm.html', err_msg=err_msg)
         else:
             err_msg = 'Phòng đã có khách đặt !!!'
     return render_template('BookingForm.html', Room=roo, err_msg=err_msg)
@@ -127,8 +137,6 @@ def categories_detail(room_id):
 #     return render_template('ListRoomRecep.html', TypeRoom=TypeRoom, Room=Room)
 
 
-
-
 @app.route("/recep-login", methods=['get', 'post'])
 @anonymous_user
 def recep_login():
@@ -146,6 +154,7 @@ def recep_login():
         else:
             err_msg = 'Tài khoản hoặc mật khẩu không chính xác !!!'
     return render_template('signin.html', err_msg=err_msg)
+
 
 @app.route('/log_out_user')
 def logout_my_user():
@@ -165,8 +174,8 @@ def logout_my_user():
 
 @app.route('/admin-login', methods=['post'])
 def signin_admin():
-    username = request.form[ 'username']
-    password = request.form[ 'password']
+    username = request.form['username']
+    password = request.form['password']
 
     user = utils.check_login_admin(username=username,
                                    password=password)
