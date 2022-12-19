@@ -62,28 +62,18 @@ def book_room(room_id):
     return render_template('BookingForm.html', Room=roo)
 
 
-@app.route("/book-room//export/<int:room_id>")
+@app.route("/booking/export/<int:room_id>",  methods=['post'])
 def export_booking_form(room_id):
-    err_msg = ''
-    if request.method.__eq__('POST'):
-        name_1 = request.form['name1']
-        citizen_id = request.form['citizen_id']
-        address = request.form['address']
-        country = request.form['country']
-        check_in_day = request.form['check_in_day']
-        check_out_day = request.form['check_out_day']
-        room = utils.check_room(room_id)
-        if room:
-            succes_msg = 'Đặt phòng thành công'
-            return check_in_day
-            # utils.BooKing(name_1=name_1, typecustomer_1=country, citizen_id_1=citizen_id,
-            #                      address_1=address, room_id=room_id, check_in_day=check_in_day,
-            #                      check_out_day=check_out_day)
+    name_1 = request.form['name_1']
+    citizen_id = request.form['citizen_id']
+    address = request.form['address']
+    country = request.form['country']
+    customer_1 = utils.create_customer(Name=name_1, Country=country, Citizen_id=citizen_id, Address=address)
+    check_in_day = request.form['check_in_day']
+    check_out_day = request.form['check_out_day']
+    utils.booking_room_1(cus_1=customer_1, room_id=room_id, check_in_day=check_in_day, check_out_day=check_out_day)
+    return country
 
-            # return render_template('ExportBookingForm.html', succes_msg=succes_msg)
-        else:
-            err_msg = 'Phòng đã có khách đặt !!!'
-    return render_template('BookingForm.html', err_msg=err_msg)
 
 
 @app.route("/phieuthue")
@@ -162,20 +152,10 @@ def logout_my_user():
     return render_template('signin.html')
 
 
-# class RecepAuthenticatedModelView():
-#     def is_accessible(self):
-#         return current_user.is_authenticated and current_user.user_role.__eq__(UserRole.RECEP)
-#
-#
-# class RecepAuthenticatedView():
-#     def is_accessible(self):
-#         return current_user.is_authenticated
-
-
 @app.route('/admin-login', methods=['post'])
 def signin_admin():
-    username = request.form[ 'username']
-    password = request.form[ 'password']
+    username = request.form['username']
+    password = request.form['password']
 
     user = utils.check_login_admin(username=username,
                                    password=password)

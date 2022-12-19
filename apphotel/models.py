@@ -39,15 +39,6 @@ class Room(BaseModel):
         return self.name
 
 
-# class User(BaseModel):
-#     name = Column(String(50), nullable=False)
-#     username = Column(String(50), nullable=False, unique=True)
-#     password = Column(String(50), nullable=False)
-#
-#     def __str__(self):
-#         return self.name
-
-
 class Account(BaseModel, UserMixin):
     name = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
@@ -62,12 +53,13 @@ class Account(BaseModel, UserMixin):
 
 class Customer(BaseModel):
     Name = Column(String(50), nullable=False, unique=True)
-    Country = Column(Boolean, default=False)
+    Country = Column(String(50), default=False)
     Citizen_id = Column(String(50))
     Address = Column(String(150))
+    receipts = relationship('Receipt', backref='customer', lazy=True)
 
     def __str__(self):
-        return self.Name
+        return self.id
 
 
 class BookingForm(BaseModel):
@@ -76,16 +68,16 @@ class BookingForm(BaseModel):
     Check_inDate = Column(DateTime, default=DayBook)
     # (Check_inDate - DayBook).days
     Check_outDay = Column(DateTime)
-    Cus1 = Column(ForeignKey(Customer.Name), nullable=False)
-    Cus2 = Column(ForeignKey(Customer.Name), nullable=True)
-    Cus3 = Column(ForeignKey(Customer.Name), nullable=True)
-
-    def __str__(self):
-        return self.idForm
+    Cus1 = Column(ForeignKey(Customer.id), nullable=True)
+    Cus2 = Column(ForeignKey(Customer.id), nullable=True)
+    Cus3 = Column(ForeignKey(Customer.id), nullable=True)
 
 
 class Receipt(BaseModel):
+    Room_id = Column(Integer, ForeignKey(Room.id), nullable=False)
     created_date = Column(DateTime, default=datetime.now())
+    Check_inDate = Column(DateTime, default=created_date)
+    Check_outDay = Column(DateTime)
     user_id = Column(Integer, ForeignKey(Customer.id), nullable=False)
     details = relationship('ReceiptDetails', backref='receipt', lazy=True)
 
