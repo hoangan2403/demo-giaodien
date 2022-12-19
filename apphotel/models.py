@@ -138,5 +138,4 @@ if __name__ == '__main__':
 
         db.session.add_all([a1, a2])
         db.session.commit()
-
         # db.create_all()

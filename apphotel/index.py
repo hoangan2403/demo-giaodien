@@ -86,22 +86,26 @@ def export_booking_form(room_id):
         room = utils.check_room(room_id)
         if room:
             utils.booked(room_id)
+
             err_msg = 'Đặt phòng thành công'
             if room.max == 2:
                 try:
                     Cus1 = utils.add_customer(name=name_1, country=country, citizen_id=citizen_id, address=address,
                                               room_id=room_id)
+                    cre = utils.add_Receipt(user_id=Cus1.id)
                     Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
                                               room_id=room_id)
                     utils.add_booking(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
                                       Customer_id=Cus1.id, Room_name=room.name, Customer_name1=Cus1.name)
+                    utils.add_ReceiptDetails(quantity=0,price=0, product_id=room.id, receipt_id=cre.id)
                 except:
-                    err_msg = 'Hệ thống lỗi'
+                    err_msg = 'Hệ thống lỗiii'
                 return render_template('ExportBookingForm.html', err_msg=err_msg)
             else:
                 try:
                     Cus1 = utils.add_customer(name=name_1, country=country, citizen_id=citizen_id, address=address,
                                               room_id=room_id)
+                    utils.add_Receipt(user_id=Cus1.id)
                     Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
                                               room_id=room_id)
                     Cus3 = utils.add_customer(name=name_3, country=country3, citizen_id=citizen_id3, address=address3,
@@ -186,6 +190,19 @@ def list_booking_from():
 def BookingForm_detail(id):
     Book = utils.get_bookingForm_by_id(id)
     return render_template('Form.html', BookingForm=Book)
+
+@app.route('/Pay-form', methods=['get', 'post'])
+def PayForm():
+    if request.method.__eq__('POST'):
+        BookingForm_id = request.form['BookingForm_id']
+        day_number = request.form['day_number']
+        Book = utils.get_bookingForm_by_id(BookingForm_id)
+        # roo = utils.get_room_by_id(Book.Room_id)
+        cre = utils.get_ReceiptDetails_by_id(Book.Room_id)
+        # cre.price = roo.price*day_number
+        # db.session.commit()
+        return render_template('Pay.html', ReceiptDetails=cre)
+    return render_template('/layout/footer.html')
 
 @login.user_loader
 def load_user(user_id):

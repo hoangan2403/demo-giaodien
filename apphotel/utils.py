@@ -97,13 +97,27 @@ def add_customer(name, country, citizen_id, address, room_id):
     db.session.add(customer)
     db.session.commit()
     return customer
-def add_booking(Room_id, Check_inDate, Check_outDay, Customer_id, Room_name, Customer_name1):
-    booking_form = BookingForm(Room_id=Room_id, Check_inDate=Check_inDate, Check_outDay=Check_outDay, Customer_id=Customer_id, Room_name=Room_name, Customer_name1=Customer_name1)
+def add_booking(Room_id, Check_inDate, Check_outDay, Customer_id, Room_name, Customer_name1,):
+    booking_form = BookingForm(Room_id=Room_id, Check_inDate=Check_inDate, Check_outDay=Check_outDay,
+                               Customer_id=Customer_id, Room_name=Room_name, Customer_name1=Customer_name1)
     db.session.add(booking_form)
     db.session.commit()
+def add_Receipt( user_id):
+    receipt = Receipt(user_id=user_id)
+    db.session.add(receipt)
+    db.session.commit()
+    return receipt
 
+def add_ReceiptDetails(price, quantity, product_id, receipt_id):
+    receiptdetails = ReceiptDetails(quantity=quantity, price=price, product_id=product_id, receipt_id=receipt_id)
+    db.session.add(receiptdetails)
+    db.session.commit()
 
-
+def get_ReceiptDetails_by_id(id):
+    Book = BookingForm.query.all()
+    for c in Book:
+        if c.product_id == id:
+            return c
 def count_product_by_cate():
     return db.session.query(TypeRoom.id, TypeRoom.name, func.count(Room.id)) \
         .join(Room, Room.TypeRoom_id.__eq__(TypeRoom.id), isouter=True) \
