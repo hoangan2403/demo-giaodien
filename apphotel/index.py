@@ -191,16 +191,16 @@ def BookingForm_detail(id):
     Book = utils.get_bookingForm_by_id(id)
     return render_template('Form.html', BookingForm=Book)
 
-@app.route('/Pay-form', methods=['get', 'post'])
-def PayForm():
+@app.route('/Pay-form/<int:room_id>', methods=['get', 'post'])
+def PayForm(room_id):
     if request.method.__eq__('POST'):
         BookingForm_id = request.form['BookingForm_id']
         day_number = request.form['day_number']
-        Book = utils.get_bookingForm_by_id(BookingForm_id)
-        # roo = utils.get_room_by_id(Book.Room_id)
-        cre = utils.get_ReceiptDetails_by_id(Book.Room_id)
-        # cre.price = roo.price*day_number
-        # db.session.commit()
+        # Book = utils.get_bookingForm_by_id(BookingForm_id)
+        roo = utils.get_room_by_id(room_id)
+        cre = utils.get_ReceiptDetails_by_id(room_id)
+        cre.price = float(roo.price)*float(day_number)
+        db.session.commit()
         return render_template('Pay.html', ReceiptDetails=cre)
     return render_template('/layout/footer.html')
 

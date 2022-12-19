@@ -24,7 +24,7 @@
             <i class="model-heading-icon ti-bag"></i>
             Lập Phiếu Thanh Toán
         </header>
-        <form method="post" action="{{ url_for('PayForm') }}">
+        <form method="post" action="{{ url_for('PayForm', room_id=BookingForm.Room_id) }}">
             <div style="background-color: #fff; padding: 1% 1%; display: flex; justify-content: space-around" class ="model-body">
                 <div class="size-info-customer">
                     <div class="mb-3">

@@ -114,7 +114,7 @@ def add_ReceiptDetails(price, quantity, product_id, receipt_id):
     db.session.commit()
 
 def get_ReceiptDetails_by_id(id):
-    Book = BookingForm.query.all()
+    Book = ReceiptDetails.query.all()
     for c in Book:
         if c.product_id == id:
             return c
