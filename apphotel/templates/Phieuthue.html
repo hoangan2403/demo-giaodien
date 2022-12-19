@@ -1,21 +1,62 @@
 {% extends 'layout/base.html' %}
 {% block title %} Lễ Tân {% endblock %}
 {% block content %}
-
-<h1 class="header-text text-white text-center">Danh sách phiếu thuê</h1>
-    {% for p in TypeRoom %}
-      <h3 class="text-background text-center text-white">Tầng {{ p.id }}</h3>
-      <div class="roms">
-        {% for c in Room if c.TypeRoom_id == p.id %}
-        <div class="rom">
-          <div class="rom-img">
-            <a><img src="{{ url_for('static', filename=c.image) }}"></a>
-          </div>
-          <div class="rom-text">
-            <p>Phòng 10{{ c.id }}</p>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-  {% endfor %}
+<style>
+    .items{
+    position:absolute;
+    right: 30%;
+    top:30%
+}
+*{
+    background-color: rgb(14, 222, 208);
+}
+table{
+    color: black;
+    width: 500px;
+    height: 250px;
+}
+</style>
+<div class="items">
+        <table border="1">
+            <tr>
+                <td colspan="5" align="center">Phiếu thuê phòng</td>
+            </tr>
+            <tr>
+                <td colspan="2">Các Phòng thuê:......    </td>
+                <td colspan="3">Ngày nhận phòng:......   </td>
+            </tr>
+            <tr>
+                <td colspan="3">Ngày trả phòng........  </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>STT</td>
+                <td>Khách hàng</td>
+                <td>Loại khách</td>
+                <td>CMND</td>
+                <td>Địa chỉ</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
 {% endblock %}

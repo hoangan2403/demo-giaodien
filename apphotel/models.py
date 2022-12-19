@@ -134,8 +134,5 @@ if __name__ == '__main__':
 
         db.session.add_all([a1, a2])
         db.session.commit()
-        # cus2 = Customer(name='Ann', country='VietNam', citizen_id='1', address='Go Dau')
-        # db.session.add(cus2)
-        # db.session.commit()
 
         # db.create_all()

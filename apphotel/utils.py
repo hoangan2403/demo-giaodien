@@ -38,6 +38,14 @@ def get_room_by_id(room_id):
         if c.id == room_id:
             return c
 
+def get_bookingForm():
+    return BookingForm.query.all()
+def get_bookingForm_by_id(id):
+    Book = BookingForm.query.all()
+    for c in Book:
+        if c.id == id:
+            return c
+
 
 def check_login(username, password, user_role=UserRole.RECEP):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
@@ -67,6 +75,11 @@ def account_signup(name, username, password, user_role):
 
 def check_room(room_id):
     return Room.query.filter(Room.id == room_id, Room.active == 0).first()
+
+def booked(room_id):
+    room = Room.query.filter(Room.id == room_id, Room.active == 0).first()
+    room.active = 1
+    db.session.commit()
 
 
 # class BooKing:

@@ -85,6 +85,7 @@ def export_booking_form(room_id):
         check_out_day = request.form['check_out_day']
         room = utils.check_room(room_id)
         if room:
+            utils.booked(room_id)
             err_msg = 'Đặt phòng thành công'
             if room.max == 2:
                 try:
@@ -130,12 +131,6 @@ def categories_detail(room_id):
     return render_template('Chitietphong.html', Room=roo)
 
 
-# @app.route("/listroom")
-# def list_room_recep():
-#     TypeRoom = utils.load_typeroom()
-#     Room = utils.load_room()
-#     return render_template('ListRoomRecep.html', TypeRoom=TypeRoom, Room=Room)
-
 
 @app.route("/recep-login", methods=['get', 'post'])
 @anonymous_user
@@ -162,14 +157,6 @@ def logout_my_user():
     return render_template('signin.html')
 
 
-# class RecepAuthenticatedModelView():
-#     def is_accessible(self):
-#         return current_user.is_authenticated and current_user.user_role.__eq__(UserRole.RECEP)
-#
-#
-# class RecepAuthenticatedView():
-#     def is_accessible(self):
-#         return current_user.is_authenticated
 
 
 @app.route('/admin-login', methods=['post'])
@@ -184,6 +171,21 @@ def signin_admin():
 
     return redirect('/admin')
 
+
+@app.route('/list-booking-form')
+def list_booking_from():
+    bookingform = utils.get_bookingForm()
+    return render_template('ListBookingForm.html', BookingForm=bookingform)
+
+
+# @app.route("/Room/<int:room_id>")
+# def categories_detail(room_id):
+#     roo = utils.get_room_by_id(room_id)
+#     return render_template('Chitietphong.html', Room=roo)
+@app.route("/BookingForm/<int:id>")
+def BookingForm_detail(id):
+    Book = utils.get_bookingForm_by_id(id)
+    return render_template('Form.html', BookingForm=Book)
 
 @login.user_loader
 def load_user(user_id):
