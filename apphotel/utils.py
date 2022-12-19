@@ -1,8 +1,9 @@
 import hashlib
-import json, os
-from apphotel import app, db
-from apphotel.models import TypeRoom, Room, Account, UserRole, Customer, ReceiptDetails, Receipt, BookingForm
+import json
+from apphotel import db
+from apphotel.models import TypeRoom, Room, Account, UserRole, Customer, BookingForm, ReceiptDetails, Receipt
 from sqlalchemy import func
+
 
 def read_json(path):
     with open(path, "r") as f:
@@ -65,48 +66,28 @@ def account_signup(name, username, password, user_role):
 
 
 def check_room(room_id):
-    return Room.query.filter(Room.id==room_id, Room.active==0).first()
+    return Room.query.filter(Room.id == room_id, Room.active == 0).first()
 
 
-def create_customer(Name, Country, Citizen_id, Address):
-    customer = Customer(Name=Name, Country=Country, Citizen_id=Citizen_id, Address=Address)
+# class BooKing:
+def booking_room_1(name_1, typecustomer_1, citizen_id_1, address_1, room_id, check_in_day, check_out_day):
 
+    customer = Customer(name=name_1, country=typecustomer_1, citizen_id=citizen_id_1, address=address_1)
+    booking_form = BookingForm(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
+                               Cus1=customer)
     db.session.add(customer)
-    db.session.commit()
-
-
-def booking_room_1(cus_1, room_id, check_in_day, check_out_day):
-    booking_form = BookingForm(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day, Cus1=cus_1)
     db.session.add(booking_form)
     db.session.commit()
-#
-#     def booking_room_2(self, name_1, typecustomer_1, citizen_id_1, address_1,
-#                      name_2, typecustomer_2, citizen_id_2, address_2,
-#                      room_id, check_in_day, check_out_day):
-#         customer_1 = Customer(Name=name_1, Country=typecustomer_1, Citizen_id=citizen_id_1, Address=address_1)
-#         customer_2 = Customer(Name=name_2, Country=typecustomer_2, Citizen_id=citizen_id_2, Address=address_2)
-#         booking_form = BookingForm(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
-#                                    Cus1=customer_1, Cus2=customer_2)
-#         db.session.add(customer_1)
-#         db.session.add(customer_2)
-#         db.session.add(booking_form)
-#         db.session.commit()
-#
-#     def booking_room_3(self, name_1,typecustomer_1, citizen_id_1, address_1,
-#                      name_2, typecustomer_2, citizen_id_2, address_2,
-#                      name_3, typecustomer_3, citizen_id_3, address_3,
-#                      room_id, check_in_day, check_out_day):
-#         customer_1 = Customer(Name=self, Country=typecustomer_1, Citizen_id=citizen_id_1, Address=address_1)
-#         customer_2 = Customer(Name=name_2, Country=typecustomer_2, Citizen_id=citizen_id_2, Address=address_2)
-#         customer_3 = Customer(Name=name_3, Country=typecustomer_3, Citizen_id=citizen_id_3, Address=address_3)
-#         booking_form = BookingForm(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
-#                                    Cus1=customer_1, Cus2=customer_2, Cus3=customer_3)
-#         db.session.add(customer_1)
-#         db.session.add(customer_2)
-#         db.session.add(customer_3)
-#         db.session.add(booking_form)
-#         db.session.commit()
 
+def add_customer(name, country, citizen_id, address, room_id):
+    customer = Customer(name=name, country=country, citizen_id=citizen_id, address=address, room_id=room_id)
+    db.session.add(customer)
+    db.session.commit()
+    return customer
+def add_booking(Room_id, Check_inDate, Check_outDay, Customer_id):
+    booking_form = BookingForm(Room_id=Room_id, Check_inDate=Check_inDate, Check_outDay=Check_outDay, Customer_id=Customer_id)
+    db.session.add(booking_form)
+    db.session.commit()
 
 
 def count_product_by_cate():

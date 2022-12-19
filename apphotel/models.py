@@ -52,14 +52,14 @@ class Account(BaseModel, UserMixin):
 
 
 class Customer(BaseModel):
-    Name = Column(String(50), nullable=False, unique=True)
-    Country = Column(String(50), default=False)
-    Citizen_id = Column(String(50))
-    Address = Column(String(150))
-    receipts = relationship('Receipt', backref='customer', lazy=True)
+    name = Column(String(500), nullable=False)
+    country = Column(String(500), nullable=False)
+    citizen_id = Column(String(500), nullable=False)
+    address = Column(String(500),  nullable=False)
+    room_id = Column(Integer, ForeignKey(Room.id), nullable=False)
 
     def __str__(self):
-        return self.id
+        return self.name
 
 
 class BookingForm(BaseModel):
@@ -68,9 +68,14 @@ class BookingForm(BaseModel):
     Check_inDate = Column(DateTime, default=DayBook)
     # (Check_inDate - DayBook).days
     Check_outDay = Column(DateTime)
-    Cus1 = Column(ForeignKey(Customer.id), nullable=True)
-    Cus2 = Column(ForeignKey(Customer.id), nullable=True)
-    Cus3 = Column(ForeignKey(Customer.id), nullable=True)
+    Customer_id = Column(Integer, ForeignKey(Customer.id), nullable=False)
+    # Cus1 = Column(ForeignKey(Customer.id), nullable=False)
+    # Cus2 = Column(ForeignKey(Customer.id), nullable=True)
+    # Cus3 = Column(ForeignKey(Customer.id), nullable=True)
+
+    def __str__(self):
+        return self.idForm
+
 
 
 class Receipt(BaseModel):
@@ -119,11 +124,13 @@ if __name__ == '__main__':
         # db.session.commit()
 
         # password = str(hashlib.md5('123'.encode('utf-8')).hexdigest())
-        # #
         # a1 = Account(name='Thuyền', username='thuyen123', password=password)
         # a2 = Account(name='Ân', username='an123', password=password, user_role=UserRole.ADMIN)
-
+        #
         # db.session.add_all([a1, a2])
+        # db.session.commit()
+        # cus2 = Customer(name='Ann', country='VietNam', citizen_id='1', address='Go Dau')
+        # db.session.add(cus2)
         # db.session.commit()
 
         db.create_all()
