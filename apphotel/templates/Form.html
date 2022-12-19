@@ -4,11 +4,12 @@
 <h1 class="header-text text-white text-center">Phiếu Thuê {{ BookingForm.id }}</h1>
 <div class="rom-detail">
         <div class="img-rom-detail">
-            <img src="./static/images/p1.jpg">
+            <img src="./static/images/p1.jpg"  alt="Ảnh">
         </div>
         <div class="place-body">
-            <h2 class="place-heading">Mã Phiếu Thuê: {{ BookingForm.id }}</h2>
-            <p class="place-time">Ngày Thuê: {{ BookingForm.Daybook }}</p>
+            <p class="place-time">Mã Phiếu Thuê: {{ BookingForm.id }}</p>
+            <p class="place-time">Khách Hàng: {{ BookingForm.Customer_name1}}</p>
+            <p class="place-time">Phòng Thuê: {{ BookingForm.Room_name}}</p>
             <button class="btn btn-warning ">
                 <a style="text-decoration:none; color:black" href="">Tính Tiền</a>
             </button>

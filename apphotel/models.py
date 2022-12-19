@@ -77,6 +77,10 @@ class BookingForm(BaseModel):
     Check_inDate = Column(DateTime, default=DayBook)
     # (Check_inDate - DayBook).days
     Check_outDay = Column(DateTime)
+    Room_name = Column(String(50), nullable=False)
+    Customer_name1 = Column(String(50), nullable=False)
+    Customer_name2 = Column(String(50), nullable=True)
+    Customer_name3 = Column(String(50), nullable=True)
     Customer_id = Column(Integer, ForeignKey(Customer.id), nullable=False)
     # Cus1 = Column(ForeignKey(Customer.id), nullable=False)
     # Cus2 = Column(ForeignKey(Customer.id), nullable=True)

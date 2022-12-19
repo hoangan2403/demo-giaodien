@@ -6,6 +6,9 @@
     text-decoration: none;
     list-style-type: none;
 }
+.padding{
+    padding-bottom:30px;
+}
 .container {
     width: 80%;
     margin: auto;

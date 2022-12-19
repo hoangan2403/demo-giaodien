@@ -97,38 +97,10 @@ def add_customer(name, country, citizen_id, address, room_id):
     db.session.add(customer)
     db.session.commit()
     return customer
-def add_booking(Room_id, Check_inDate, Check_outDay, Customer_id):
-    booking_form = BookingForm(Room_id=Room_id, Check_inDate=Check_inDate, Check_outDay=Check_outDay, Customer_id=Customer_id)
+def add_booking(Room_id, Check_inDate, Check_outDay, Customer_id, Room_name, Customer_name1):
+    booking_form = BookingForm(Room_id=Room_id, Check_inDate=Check_inDate, Check_outDay=Check_outDay, Customer_id=Customer_id, Room_name=Room_name, Customer_name1=Customer_name1)
     db.session.add(booking_form)
     db.session.commit()
-
-# def booking_room_2(name_1, typecustomer_1, citizen_id_1, address_1,
-#                    name_2, typecustomer_2, citizen_id_2, address_2,
-#                    room_id, check_in_day, check_out_day):
-#     customer_1 = Customer(name=name_1, country=typecustomer_1, citizen_id=citizen_id_1, address=address_1)
-#     customer_2 = Customer(name=name_2, country=typecustomer_2, citizen_id=citizen_id_2, address=address_2)
-#     booking_form = BookingForm(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
-#                                Cus1=customer_1, Cus2=customer_2)
-#     db.session.add(customer_1)
-#     db.session.add(customer_2)
-#     db.session.add(booking_form)
-#     db.session.commit()
-#
-# def booking_room_3(name_1, typecustomer_1, citizen_id_1, address_1,
-#                    name_2, typecustomer_2, citizen_id_2, address_2,
-#                    name_3, typecustomer_3, citizen_id_3, address_3,
-#                    room_id, check_in_day, check_out_day):
-#     customer_1 = Customer(name=name_1, country=typecustomer_1, citizen_id=citizen_id_1, address=address_1)
-#     customer_2 = Customer(name=name_2, country=typecustomer_2, citizen_id=citizen_id_2, address=address_2)
-#     customer_3 = Customer(name=name_3, country=typecustomer_3, citizen_id=citizen_id_3, address=address_3)
-#     booking_form = BookingForm(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
-#                                Cus1=customer_1, Cus2=customer_2, Cus3=customer_3)
-#
-#     db.session.add(customer_1)
-#     db.session.add(customer_2)
-#     db.session.add(customer_3)
-#     db.session.add(booking_form)
-#     db.session.commit()
 
 
 

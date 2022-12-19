@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+{% block title %} Phiếu Thuê {% endblock %}
+{% block content %}
+<h1 class="header-text text-white text-center">Thanh Toán Hóa Đơn</h1>
+<form method="post" action="">
+        <div style="background-color: #fff; padding: 1% 1%; display: flex; justify-content: space-around">
+            <div class="size-info-customer">
+                <div class="mb-3">
+                  <label for="BookingForm_id" class="form-label">Mã Phiếu Thuê</label>
+                  <input type="text" class="form-control" id="BookingForm_id" name ="BookingForm_id" required placeholder="Nhập Mã Phiếu Thuê">
+                </div>
+                <div class="mb-3">
+                  <label for="day_number" class="form-label">Số Ngày Thuê</label>
+                  <input type="number" class="form-control" id="day_number" name ="day_number" required placeholder="Nhập Số Ngày">
+                </div>
+            </div>
+        </div>
+        <div style="margin-left: 50%; transform: translate(-5%, 0%); padding-bottom: 2%">
+            <button type="submit">
+               Đặt Phòng
+            </button>
+        </div>
+    </form>
+
+{% endblock %}

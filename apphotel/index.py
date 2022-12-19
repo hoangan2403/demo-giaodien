@@ -94,7 +94,7 @@ def export_booking_form(room_id):
                     Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
                                               room_id=room_id)
                     utils.add_booking(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
-                                      Customer_id=Cus1.id)
+                                      Customer_id=Cus1.id, Room_name=room.name, Customer_name1=Cus1.name)
                 except:
                     err_msg = 'Hệ thống lỗi'
                 return render_template('ExportBookingForm.html', err_msg=err_msg)
@@ -107,7 +107,7 @@ def export_booking_form(room_id):
                     Cus3 = utils.add_customer(name=name_3, country=country3, citizen_id=citizen_id3, address=address3,
                                               room_id=room_id)
                     utils.add_booking(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
-                                      Customer_id=Cus1.id)
+                                      Customer_id=Cus1.id, Room_name=room.name, Customer_name1=Cus1.name)
                 except:
                     err_msg = 'Hệ thống lỗi'
                 return render_template('ExportBookingForm.html', err_msg=err_msg)
