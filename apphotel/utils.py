@@ -14,12 +14,12 @@ def load_room(TypeRoom_id=None, kw=None, to_price=None, from_price=None):
     roo = Room.query.all()
     if TypeRoom_id:
         roo = Room.query.filter(Room.TypeRoom_id.__eq__(TypeRoom_id))
-    if kw:
-        roo = Room.query.filter(Room.description.contains(kw))
     if from_price:
         roo = Room.query.filter(Room.price.__ge__(from_price))
     if to_price:
         roo = Room.query.filter(Room.price.__le__(to_price))
+    if kw:
+        roo = Room.query.filter(Room.description.contains(kw))
 
     return roo
 
@@ -40,10 +40,17 @@ def get_room_by_id(room_id):
 
 def get_bookingForm():
     return BookingForm.query.all()
+
 def get_bookingForm_by_id(id):
     Book = BookingForm.query.all()
     for c in Book:
         if c.id == id:
+            return c
+
+def get_bookingForm_by_Room_id(room_id):
+    Book = BookingForm.query.all()
+    for c in Book:
+        if c.Room_id == room_id:
             return c
 
 
@@ -81,6 +88,10 @@ def booked(room_id):
     room.active = 1
     db.session.commit()
 
+def DoneBook(room_id):
+    room = Room.query.filter(Room.id == room_id, Room.active == 1).first()
+    room.active = 0
+    db.session.commit()
 
 # class BooKing:
 def booking_room_1(name_1, typecustomer_1, citizen_id_1, address_1, room_id, check_in_day, check_out_day):
@@ -112,6 +123,9 @@ def add_ReceiptDetails(price, quantity, product_id, receipt_id):
     receiptdetails = ReceiptDetails(quantity=quantity, price=price, product_id=product_id, receipt_id=receipt_id)
     db.session.add(receiptdetails)
     db.session.commit()
+
+def get_ReceiptDetails():
+    return ReceiptDetails.query.all()
 
 def get_ReceiptDetails_by_id(id):
     Book = ReceiptDetails.query.all()

@@ -1,15 +1,15 @@
-{% extends 'layout/base.html' %}
-{% block title %} Lễ Tân {% endblock %}
-{% block content %}
-<div class="rom-detail">
-        <div class="img-rom-detail">
-            <img src="{{ url_for('static', filename=Room.image) }}" alt="Ảnh">
-        </div>
-        <div class="place-body">
-            <h2 class="place-heading">{{ Room.name }}</h2>
-            <p class="place-time">{{ "{:,.2f}".format(Room.price) }} VND/đêm</p>
-            <p class="place-content">{{ Room.description }}</p>
-            <button class="btn btn-warning "><a style="text-decoration:none; color:black" href="{{ url_for('book_room', room_id = Room.id) }}">Đặt Phòng</a></button>
-        </div>
-    </div>
-{% endblock %}
+<!--{% extends 'layout/base.html' %}-->
+<!--{% block title %} Lễ Tân {% endblock %}-->
+<!--{% block content %}-->
+<!--<div class="rom-detail">-->
+<!--        <div class="img-rom-detail">-->
+<!--            <img src="{{ url_for('static', filename=Room.image) }}" alt="Ảnh">-->
+<!--        </div>-->
+<!--        <div class="place-body">-->
+<!--            <h2 class="place-heading">{{ Room.name }}</h2>-->
+<!--            <p class="place-time">{{ "{:,.2f}".format(Room.price) }} VND/đêm</p>-->
+<!--            <p class="place-content">{{ Room.description }}</p>-->
+<!--            <button class="btn btn-warning "><a style="text-decoration:none; color:black" href="{{ url_for('book_room', room_id = Room.id) }}">Đặt Phòng</a></button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--{% endblock %}-->

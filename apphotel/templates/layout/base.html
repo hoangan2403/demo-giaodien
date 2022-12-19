@@ -16,11 +16,44 @@
 </head>
 <body style="background-color: black;">
   {% block header %}
+  {% if current_user.is_authenticated %}
+
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="javascript:void(0)"><img src="{{ url_for('static', filename='images/Trangchu/logo2.jpg') }}" alt="name" class="logo-img"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">DANH SÁCH PHIẾU</a>
+                    <ul class="menu-none">
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">HÓA ĐƠN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('list_booking_from') }}">PHIẾU THUÊ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">PHIÊU ĐẶT</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('list_room_recep') }}">DANH SÁCH PHÒNG</a>
+                </li>
+                <div class="admin"><a href="/log_out_user">Đăng xuất</a></div>
+            </ul>
+        </div>
+    </nav>
+
+  {% else %}
     {% include 'layout/header.html' %}
+  {% endif %}
   {% endblock %}
 <div class="container">
     {% block content %}
-
   {% endblock %}
 </div>
 

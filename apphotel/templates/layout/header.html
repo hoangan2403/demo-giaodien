@@ -22,11 +22,8 @@
                                 {% endfor %}
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">PHÒNG ĐÃ ĐẶT</a>
-                        </li>
                     </ul>
-                    <form class="d-flex">
+                    <form class="d-flex" action="{{ url_for('home') }}">
                         <input class="form-control me-2" name="from_price" type="number" placeholder="Giá Thấp Nhất">
                         <input class="form-control me-2" name="to_price" type="number" placeholder="Giá Cao Nhất">
                         <input class="form-control me-2" name="keyword" type="text" placeholder="Nhập loại phòng cần tìm...">
@@ -34,29 +31,5 @@
                     </form>
                     <div class="admin"><a href="/recep-login">ĐĂNG NHẬP</a></div>
                 {% endif %}
-
-                {% if user %}
-                    <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript:void(0)">DANH SÁCH PHIẾU</a>
-                                <ul class="menu-none">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="javascript:void(0)">HÓA ĐƠN</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url_for('list_booking_from') }}">PHIẾU THUÊ</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">PHIÊU ĐẶT</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('list_room_recep') }}">DANH SÁCH PHÒNG</a>
-                            </li>
-                        <div class="admin"><a href="/log_out_user">Đăng xuất</a></div>
-                    </ul>
-              {% endif %}}
-                </div>
             </div>
 </nav>

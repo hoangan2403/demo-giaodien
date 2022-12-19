@@ -21,28 +21,17 @@ def home():
                            to_price=to_price)
 
 
+
 @app.route("/list_room")
 def list_room():
-    TypeRoom_id = request.args.get("TypeRoom_id")
-    roo = utils.load_room(TypeRoom_id=TypeRoom_id)
-    typeRoom = utils.load_typeroom()
-    Type_id = utils.get_typeroom_by_id(TypeRoom_id)
-    return render_template('danhsachphong.html',
-                           Room=roo,
-                           TypeRoom=typeRoom,
-                           Type_id=Type_id)
-
-
-@app.route("/list_room")
-def list_room2():
     TypeRoom_id = request.args.get("TypeRoom_id")
     kw = request.args.get("keyword")
     from_price = request.args.get("from_price")
     to_price = request.args.get("to_price")
     roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
     typeroom = utils.load_typeroom()
-
-    return render_template('danhsachphong2.html',
+    return render_template('danhsachphong.html',
+                           TypeRoom_id=TypeRoom_id,
                            Room=roo,
                            TypeRoom=typeroom,
                            kw=kw,
@@ -60,7 +49,8 @@ def list_room_recep():
 @app.route("/book-room/<int:room_id>")
 def book_room(room_id):
     roo = utils.get_room_by_id(room_id)
-    return render_template('BookingForm.html', Room=roo)
+    TypeRoom = utils.load_typeroom()
+    return render_template('BookingForm.html', Room=roo, TypeRoom=TypeRoom)
 
 
 @app.route("/book-room/<int:room_id>", methods=['get', 'post'])
@@ -105,13 +95,14 @@ def export_booking_form(room_id):
                 try:
                     Cus1 = utils.add_customer(name=name_1, country=country, citizen_id=citizen_id, address=address,
                                               room_id=room_id)
-                    utils.add_Receipt(user_id=Cus1.id)
+                    cre=utils.add_Receipt(user_id=Cus1.id)
                     Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
                                               room_id=room_id)
                     Cus3 = utils.add_customer(name=name_3, country=country3, citizen_id=citizen_id3, address=address3,
                                               room_id=room_id)
                     utils.add_booking(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
                                       Customer_id=Cus1.id, Room_name=room.name, Customer_name1=Cus1.name)
+                    utils.add_ReceiptDetails(quantity=0, price=0, product_id=room.id, receipt_id=cre.id)
                 except:
                     err_msg = 'Hệ thống lỗi'
                 return render_template('ExportBookingForm.html', err_msg=err_msg)
@@ -119,14 +110,6 @@ def export_booking_form(room_id):
             err_msg = 'Phòng đã có khách đặt !!!'
     return render_template('BookingForm.html', Room=roo, err_msg=err_msg)
 
-
-@app.route("/phieuthue")
-def phieuthue_list():
-    typeRoom = utils.load_typeroom()
-    roo = utils.load_room()
-    return render_template('Phieuthue.html',
-                           Room=roo,
-                           TypeRoom=typeRoom)
 
 
 @app.route("/Room/<int:room_id>")
@@ -143,13 +126,16 @@ def recep_login():
     if request.method.__eq__('POST'):
         username = request.form['username']
         password = request.form['password']
+        TypeRoom_id = request.args.get("TypeRoom_id")
+        roo = utils.load_room(TypeRoom_id=TypeRoom_id)
+        typeroom = utils.load_typeroom()
 
         user = utils.check_login(username=username,
                                  password=password)
         if user:
             err_msg = 'Chào mừng đến với trang Lễ Tân'
             login_user(user=user)
-            return render_template('Trangchu.html', err_msg=err_msg, user=user)
+            return render_template('Trangchu.html', err_msg=err_msg, user=user, Room=roo, TypeRoom=typeroom)
         else:
             err_msg = 'Tài khoản hoặc mật khẩu không chính xác !!!'
     return render_template('signin.html', err_msg=err_msg)
@@ -158,7 +144,7 @@ def recep_login():
 @app.route('/log_out_user')
 def logout_my_user():
     logout_user()
-    return render_template('signin.html')
+    return redirect(url_for('home'))
 
 
 
@@ -182,10 +168,7 @@ def list_booking_from():
     return render_template('ListBookingForm.html', BookingForm=bookingform)
 
 
-# @app.route("/Room/<int:room_id>")
-# def categories_detail(room_id):
-#     roo = utils.get_room_by_id(room_id)
-#     return render_template('Chitietphong.html', Room=roo)
+
 @app.route("/BookingForm/<int:id>")
 def BookingForm_detail(id):
     Book = utils.get_bookingForm_by_id(id)
@@ -194,16 +177,23 @@ def BookingForm_detail(id):
 @app.route('/Pay-form/<int:room_id>', methods=['get', 'post'])
 def PayForm(room_id):
     if request.method.__eq__('POST'):
-        BookingForm_id = request.form['BookingForm_id']
+        quantity = request.form['quantity']
         day_number = request.form['day_number']
-        # Book = utils.get_bookingForm_by_id(BookingForm_id)
+        Book = utils.get_bookingForm_by_Room_id(room_id)
         roo = utils.get_room_by_id(room_id)
         cre = utils.get_ReceiptDetails_by_id(room_id)
         cre.price = float(roo.price)*float(day_number)
+        cre.quantity = float(quantity)
         db.session.commit()
-        return render_template('Pay.html', ReceiptDetails=cre)
+        return render_template('Pay.html', ReceiptDetails=cre, Room=roo, BookingForm=Book)
     return render_template('/layout/footer.html')
-
+@app.route('/Done/<int:room_id>')
+def Done(room_id):
+    Book = utils.get_bookingForm_by_Room_id(room_id)
+    utils.DoneBook(room_id)
+    db.session.delete(Book)
+    db.session.commit()
+    return redirect(url_for('home'))
 @login.user_loader
 def load_user(user_id):
     return utils.get_user_by_id(user_id)

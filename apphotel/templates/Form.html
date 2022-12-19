@@ -4,7 +4,7 @@
 <h1 class="header-text text-white text-center">Phiếu Thuê {{ BookingForm.id }}</h1>
 <div class="rom-detail">
         <div class="img-rom-detail">
-            <img src="./static/images/p1.jpg"  alt="Ảnh">
+            <img src="{{ url_for('static', filename='images/p1.jpg') }}"  alt="Ảnh">
         </div>
         <div class="place-body">
             <p class="place-time">Mã Phiếu Thuê: {{ BookingForm.id }}</p>
@@ -28,8 +28,8 @@
             <div style="background-color: #fff; padding: 1% 1%; display: flex; justify-content: space-around" class ="model-body">
                 <div class="size-info-customer">
                     <div class="mb-3">
-                      <label for="BookingForm_id" class="form-label">Mã Phiếu Thuê</label>
-                      <input type="text" class="form-control model-input" id="BookingForm_id" name ="BookingForm_id" required placeholder="Nhập Mã Phiếu Thuê">
+                      <label for="BookingForm_id" class="form-label">Ghi Chú</label>
+                      <input type="text" class="form-control model-input" id="BookingForm_id" name ="quantity" required placeholder="Nhập Số Lượng">
                     </div>
                     <div class="mb-3">
                       <label for="day_number" class="form-label">Số Ngày Thuê</label>

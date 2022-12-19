@@ -137,5 +137,6 @@ if __name__ == '__main__':
         a2 = Account(name='Ân', username='an123', password=password, user_role=UserRole.ADMIN)
 
         db.session.add_all([a1, a2])
+        db.session.delete(a1)
         db.session.commit()
         # db.create_all()
