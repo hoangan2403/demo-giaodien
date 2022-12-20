@@ -83,8 +83,9 @@ def export_booking_form(room_id):
                     Cus1 = utils.add_customer(name=name_1, country=country, citizen_id=citizen_id, address=address,
                                               room_id=room_id)
                     cre = utils.add_Receipt(user_id=Cus1.id)
-                    Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
-                                              room_id=room_id)
+                    if name_2:
+                        Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
+                                                 room_id=room_id)
                     utils.add_booking(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
                                       Customer_id=Cus1.id, Room_name=room.name, Customer_name1=Cus1.name)
                     utils.add_ReceiptDetails(quantity=0,price=0, product_id=room.id, receipt_id=cre.id)
@@ -96,10 +97,12 @@ def export_booking_form(room_id):
                     Cus1 = utils.add_customer(name=name_1, country=country, citizen_id=citizen_id, address=address,
                                               room_id=room_id)
                     cre=utils.add_Receipt(user_id=Cus1.id)
-                    Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
-                                              room_id=room_id)
-                    Cus3 = utils.add_customer(name=name_3, country=country3, citizen_id=citizen_id3, address=address3,
-                                              room_id=room_id)
+                    if name_2:
+                        Cus2 = utils.add_customer(name=name_2, country=country2, citizen_id=citizen_id2, address=address2,
+                                                 room_id=room_id)
+                    if name_3:
+                        Cus3 = utils.add_customer(name=name_3, country=country3, citizen_id=citizen_id3, address=address3,
+                                                room_id=room_id)
                     utils.add_booking(Room_id=room_id, Check_inDate=check_in_day, Check_outDay=check_out_day,
                                       Customer_id=Cus1.id, Room_name=room.name, Customer_name1=Cus1.name)
                     utils.add_ReceiptDetails(quantity=0, price=0, product_id=room.id, receipt_id=cre.id)
@@ -163,16 +166,27 @@ def signin_admin():
 
 
 @app.route('/list-booking-form')
-def list_booking_from():
+def list_booking_form():
     bookingform = utils.get_bookingForm()
     return render_template('ListBookingForm.html', BookingForm=bookingform)
 
+@app.route('/list-book-form')
+def list_book_form():
+    bookingform = utils.get_bookingForm()
+    return render_template('ListBookForm.html', BookingForm=bookingform)
 
 
 @app.route("/BookingForm/<int:id>")
 def BookingForm_detail(id):
     Book = utils.get_bookingForm_by_id(id)
     return render_template('Form.html', BookingForm=Book)
+
+
+@app.route("/BookForm/<int:id>")
+def BookForm_detail(id):
+    Book = utils.get_bookingForm_by_id(id)
+    return render_template('BookForm.html', BookingForm=Book)
+
 
 @app.route('/Pay-form/<int:room_id>', methods=['get', 'post'])
 def PayForm(room_id):
