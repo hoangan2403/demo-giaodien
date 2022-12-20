@@ -9,10 +9,10 @@ from apphotel.models import UserRole
 def home():
     TypeRoom_id = request.args.get("TypeRoom_id")
     typeroom = utils.load_typeroom()
-    kw = request.args.get("keyword")
     from_price = request.args.get("from_price")
     to_price = request.args.get("to_price")
-    roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
+    kw = request.args.get("keyword")
+    roo = utils.load_room(TypeRoom_id=TypeRoom_id, from_price=from_price, to_price=to_price, kw=kw)
     return render_template('Trangchu.html',
                            Room=roo,
                            TypeRoom=typeroom,
@@ -30,7 +30,7 @@ def list_room():
     to_price = request.args.get("to_price")
     roo = utils.load_room(TypeRoom_id=TypeRoom_id, kw=kw, from_price=from_price, to_price=to_price)
     typeroom = utils.load_typeroom()
-    return render_template('danhsachphong.html',
+    return render_template('ListRoom.html',
                            TypeRoom_id=TypeRoom_id,
                            Room=roo,
                            TypeRoom=typeroom,
