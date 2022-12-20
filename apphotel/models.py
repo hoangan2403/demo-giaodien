@@ -39,6 +39,15 @@ class Room(BaseModel):
         return self.name
 
 
+# class User(BaseModel):
+#     name = Column(String(50), nullable=False)
+#     username = Column(String(50), nullable=False, unique=True)
+#     password = Column(String(50), nullable=False)
+#
+#     def __str__(self):
+#         return self.name
+
+
 class Account(BaseModel, UserMixin):
     name = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
@@ -68,21 +77,18 @@ class BookingForm(BaseModel):
     Check_inDate = Column(DateTime, default=DayBook)
     # (Check_inDate - DayBook).days
     Check_outDay = Column(DateTime)
+    Room_name = Column(String(50), nullable=False)
+    Customer_name1 = Column(String(50), nullable=False)
+    Customer_name2 = Column(String(50), nullable=True)
+    Customer_name3 = Column(String(50), nullable=True)
     Customer_id = Column(Integer, ForeignKey(Customer.id), nullable=False)
-    # Cus1 = Column(ForeignKey(Customer.id), nullable=False)
-    # Cus2 = Column(ForeignKey(Customer.id), nullable=True)
-    # Cus3 = Column(ForeignKey(Customer.id), nullable=True)
 
     def __str__(self):
         return self.idForm
 
 
-
 class Receipt(BaseModel):
-    Room_id = Column(Integer, ForeignKey(Room.id), nullable=False)
     created_date = Column(DateTime, default=datetime.now())
-    Check_inDate = Column(DateTime, default=created_date)
-    Check_outDay = Column(DateTime)
     user_id = Column(Integer, ForeignKey(Customer.id), nullable=False)
     details = relationship('ReceiptDetails', backref='receipt', lazy=True)
 
@@ -122,15 +128,12 @@ if __name__ == '__main__':
         # c18 = Room(name='Phòng 306', description='Giường đôi', price=3000000, max=3, image='images/p6.jpg', TypeRoom_id=3)
         # db.session.add_all([c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18])
         # db.session.commit()
-
+        #
         # password = str(hashlib.md5('123'.encode('utf-8')).hexdigest())
         # a1 = Account(name='Thuyền', username='thuyen123', password=password)
         # a2 = Account(name='Ân', username='an123', password=password, user_role=UserRole.ADMIN)
         #
         # db.session.add_all([a1, a2])
+        # db.session.delete(a1)
         # db.session.commit()
-        # cus2 = Customer(name='Ann', country='VietNam', citizen_id='1', address='Go Dau')
-        # db.session.add(cus2)
-        # db.session.commit()
-
         db.create_all()

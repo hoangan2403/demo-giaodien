@@ -14,12 +14,12 @@ def load_room(TypeRoom_id=None, kw=None, to_price=None, from_price=None):
     roo = Room.query.all()
     if TypeRoom_id:
         roo = Room.query.filter(Room.TypeRoom_id.__eq__(TypeRoom_id))
-    if kw:
-        roo = Room.query.filter(Room.description.contains(kw))
     if from_price:
         roo = Room.query.filter(Room.price.__ge__(from_price))
     if to_price:
         roo = Room.query.filter(Room.price.__le__(to_price))
+    if kw:
+        roo = Room.query.filter(Room.description.contains(kw))
 
     return roo
 
@@ -36,6 +36,21 @@ def get_room_by_id(room_id):
     roo = Room.query.all()
     for c in roo:
         if c.id == room_id:
+            return c
+
+def get_bookingForm():
+    return BookingForm.query.all()
+
+def get_bookingForm_by_id(id):
+    Book = BookingForm.query.all()
+    for c in Book:
+        if c.id == id:
+            return c
+
+def get_bookingForm_by_Room_id(room_id):
+    Book = BookingForm.query.all()
+    for c in Book:
+        if c.Room_id == room_id:
             return c
 
 
@@ -68,6 +83,15 @@ def account_signup(name, username, password, user_role):
 def check_room(room_id):
     return Room.query.filter(Room.id == room_id, Room.active == 0).first()
 
+def booked(room_id):
+    room = Room.query.filter(Room.id == room_id, Room.active == 0).first()
+    room.active = 1
+    db.session.commit()
+
+def DoneBook(room_id):
+    room = Room.query.filter(Room.id == room_id, Room.active == 1).first()
+    room.active = 0
+    db.session.commit()
 
 # class BooKing:
 def booking_room_1(name_1, typecustomer_1, citizen_id_1, address_1, room_id, check_in_day, check_out_day):
@@ -84,12 +108,30 @@ def add_customer(name, country, citizen_id, address, room_id):
     db.session.add(customer)
     db.session.commit()
     return customer
-def add_booking(Room_id, Check_inDate, Check_outDay, Customer_id):
-    booking_form = BookingForm(Room_id=Room_id, Check_inDate=Check_inDate, Check_outDay=Check_outDay, Customer_id=Customer_id)
+def add_booking(Room_id, Check_inDate, Check_outDay, Customer_id, Room_name, Customer_name1,):
+    booking_form = BookingForm(Room_id=Room_id, Check_inDate=Check_inDate, Check_outDay=Check_outDay,
+                               Customer_id=Customer_id, Room_name=Room_name, Customer_name1=Customer_name1)
     db.session.add(booking_form)
     db.session.commit()
+def add_Receipt( user_id):
+    receipt = Receipt(user_id=user_id)
+    db.session.add(receipt)
+    db.session.commit()
+    return receipt
 
+def add_ReceiptDetails(price, quantity, product_id, receipt_id):
+    receiptdetails = ReceiptDetails(quantity=quantity, price=price, product_id=product_id, receipt_id=receipt_id)
+    db.session.add(receiptdetails)
+    db.session.commit()
 
+def get_ReceiptDetails():
+    return ReceiptDetails.query.all()
+
+def get_ReceiptDetails_by_id(id):
+    Book = ReceiptDetails.query.all()
+    for c in Book:
+        if c.product_id == id:
+            return c
 def count_product_by_cate():
     return db.session.query(TypeRoom.id, TypeRoom.name, func.count(Room.id)) \
         .join(Room, Room.TypeRoom_id.__eq__(TypeRoom.id), isouter=True) \

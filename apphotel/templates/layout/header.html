@@ -1,51 +1,4 @@
-<!--<nav class="navbar navbar-expand-sm navbar-dark bg-dark">-->
-<!--        <div class="container-fluid">-->
-<!--          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">-->
-<!--            <span class="navbar-toggler-icon"></span>-->
-<!--          </button>-->
-<!--          <div class="collapse navbar-collapse" id="mynavbar">-->
-<!--            <ul class="navbar-nav me-auto">-->
-<!--              {% if not user %}-->
-<!--              <li class="nav-item">-->
-<!--                <a class="nav-link" href="/">LOẠI PHÒNG</a>-->
-<!--                <ul class="menu-none">-->
-<!--                  {% for p in TypeRoom %}-->
-<!--                  <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/list_room?TypeRoom_id={{ p.id }}">{{ p.name }}</a>-->
-<!--                  </li>-->
-<!--                  {% endfor %}-->
-<!--                </ul>-->
-<!--              </li>-->
-<!--              <li class="nav-item">-->
-<!--                <a class="nav-link" href="javascript:void(0)">TÌM PHÒNG</a>-->
-<!--              </li>-->
 
-<!--              <div class="admin float-right"><a href="/recep-login">Đăng Nhập</a></div>-->
-<!--              {% endif %}-->
-<!--              {% if user %}-->
-<!--              <li class="nav-item">-->
-<!--                <a class="nav-link" href="javascript:void(0)">DANH SÁCH PHIẾU</a>-->
-<!--                <ul class="menu-none">-->
-<!--                  <li class="nav-item">-->
-<!--                    <a class="nav-link" href="javascript:void(0)">HÓA ĐƠN</a>-->
-<!--                  </li>-->
-<!--                  <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/phieuthue">PHIẾU THUÊ</a>-->
-<!--                  </li>-->
-<!--                  <li class="nav-item">-->
-<!--                    <a class="nav-link" href="javascript:void(0)">PHIÊU ĐẶT</a>-->
-<!--                  </li>-->
-<!--                </ul>-->
-<!--              </li>-->
-<!--              <li class="nav-item">-->
-<!--                <a class="nav-link" href="{{ url_for('list_room_recep') }}">DANH SÁCH PHÒNG</a>-->
-<!--              </li>-->
-<!--               <div class="admin"><a href="/log_out_user">Đăng xuất</a></div>-->
-<!--              {% endif %}}-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </nav>-->
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
@@ -69,11 +22,8 @@
                                 {% endfor %}
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">PHÒNG ĐÃ ĐẶT</a>
-                        </li>
                     </ul>
-                    <form class="d-flex">
+                    <form class="d-flex" action="{{ url_for('home') }}">
                         <input class="form-control me-2" name="from_price" type="number" placeholder="Giá Thấp Nhất">
                         <input class="form-control me-2" name="to_price" type="number" placeholder="Giá Cao Nhất">
                         <input class="form-control me-2" name="keyword" type="text" placeholder="Nhập loại phòng cần tìm...">
@@ -81,29 +31,5 @@
                     </form>
                     <div class="admin"><a href="/recep-login">ĐĂNG NHẬP</a></div>
                 {% endif %}
-
-                {% if user %}
-                    <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript:void(0)">DANH SÁCH PHIẾU</a>
-                                <ul class="menu-none">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="javascript:void(0)">HÓA ĐƠN</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/phieuthue">PHIẾU THUÊ</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">PHIÊU ĐẶT</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('list_room_recep') }}">DANH SÁCH PHÒNG</a>
-                            </li>
-                        <div class="admin"><a href="/log_out_user">Đăng xuất</a></div>
-                    </ul>
-              {% endif %}}
-                </div>
             </div>
 </nav>

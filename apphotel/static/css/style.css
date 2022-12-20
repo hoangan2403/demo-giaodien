@@ -6,6 +6,9 @@
     text-decoration: none;
     list-style-type: none;
 }
+.padding{
+    padding-bottom:30px;
+}
 .container {
     width: 80%;
     margin: auto;
@@ -105,4 +108,103 @@ body {
     padding: 45px 90px;
     background-color: #212529;
     color: #6c757d;
+}
+.model{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.3);
+    align-items: center;
+    justify-content: center;
+    display:none;
+
+}
+.open{
+    display:flex;
+}
+.model-container{
+    background-color: #fff;
+    width:900px;
+    max-width: calc(100%-32px);
+    min-height: 200px;
+    position:relative;
+    animation: modelFaceIn ease .4s;
+
+}
+.model-header {
+    display: flex;
+    height: 130px;
+    font-size: 30px;
+    background-color: #009688;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+.model-body{
+    padding:16px;
+}
+.model-heading-icon {
+    margin-right: 16px;
+}
+.model-close{
+    position:absolute;
+    right:0;
+    top:0;
+    color:#fff;
+    padding:12px;
+    cursor
+    :pointer;
+}
+.model-close:hover{
+    background-color: #ccc;
+    color:#000;
+}
+.model-label{
+    display:block;
+    font-size: 15px;
+    margin-bottom:12px;
+
+}
+.model-input{
+    border:1px solid #ccc;
+    width:100%;
+    font-size: 15px;
+    padding: 10px;
+    margin-bottom:24px;
+}
+.buy-stickets {
+    background-color: #009688;
+    border: none;
+    color: #fff;
+    width: 100%;
+    font-size: 15px;
+    text-transform: uppercase;
+    padding: 18px;
+}
+
+.btn2{
+    color:#fff;
+    background-color: #000;
+    text-decoration: none;
+    padding:11px 16px;
+    display:inline-block;
+    margin-top: 15px;
+    border: none;
+}
+.btn:hover{
+    cursor: pointer;
+    color:#000;
+    background-color: #ccc;
+}
+@keyframes modelFaceIn {
+    from{
+        transform:translateY(-130px) ;
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

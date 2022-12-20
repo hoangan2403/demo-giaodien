@@ -87,7 +87,6 @@ class StatsView(AuthenticatedView):
         return self.render('admin/stats.html', stats=stats)
 
 
-
 admin = Admin(app=app, name='Quản trị khách sạn', template_mode='bootstrap4', index_view=MyAdminView())
 admin.add_view(StatsView(name='Thống kê - báo cáo'))
 admin.add_view(AuthenticatedModelView(TypeRoom, db.session, name='Loại phòng'))
