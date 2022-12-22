@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_user, current_user, logout_user
-from apphotel import app, login, utils
+from apphotel import app, login, utils, db
 from apphotel.decorators import anonymous_user
 from apphotel.models import UserRole
 
